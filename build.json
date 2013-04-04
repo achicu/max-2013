@@ -4,6 +4,8 @@
         "mobileui": "../../src/",
         "third-party": "../../third-party/dev/"
     },
+    "stubModules": ["third-party/underscore"],
     "name": "main",
-    "out": "dist/main.min.js"
+    "out": "dist/main.min.js",
+    "optimize": "none"
 }
