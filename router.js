@@ -26,7 +26,6 @@ define(["mobileui/utils/bus", "slides/list"],
 
         defaultHandler: function() {
             var view = this.lookupSlide("index");
-            console.log(view);
             if (view)
                 bus.get("mainView").navigatorView().resetCard(view);
         },
