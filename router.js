@@ -45,7 +45,6 @@ define(["mobileui/utils/bus", "slides/list"],
             var view = new ViewItem({
                 path: pathOptions
             }).render();
-            console.log(view);
             return view;
         }
     });

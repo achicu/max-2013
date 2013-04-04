@@ -13,8 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(["utils/slide-module!slides/index.html?label=index",
-        "utils/slide-module!slides/slide1.html?label=slide1"
-       ], function() {
-    return _.toArray(arguments);
+
+define(["mobileui/utils/template-module"],
+    function(TemplateModule) {
+
+    var SlideModule = _.extend({}, TemplateModule, {
+        defaultOptions: {
+            base: "views/slide-view",
+            label: ""
+        },
+        modulePath: "utils/slide-module"
+    });
+
+    return SlideModule;
 });
