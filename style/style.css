@@ -17,3 +17,8 @@
 .js-slide-view {
     background-color: white;
 }
+
+a.js-link-view.js-button-view-down {
+    background-color: #ccc;
+    border-radius: 10px;
+}
