@@ -14,14 +14,28 @@
  * limitations under the License.
  */
 
-define(["mobileui/ui/app-card-view"], function(AppCardView) {
+define(["mobileui/ui/app-card-view", "mobileui/utils/view-injector"],
+    function(AppCardView, ViewInjector) {
+
+    var viewInjector = new ViewInjector();
 
     var SlideView = AppCardView.extend({
         initialize: function() {
             SlideView.__super__.initialize.call(this);
+            this._needsTopBar = false;
             this.addGestureDetector();
             this.on("tap", this._onTap, this);
-            this._needsTopBar = false;
+            this.on("views:injected", this._onViewsInjected, this);
+
+            var self = this;
+            this.$el.html(this._template);
+            viewInjector.convert(this).then(function() {
+                self.trigger("views:injected");
+            });
+        },
+
+        _onViewsInjected: function() {
+            console.log("Loaded injected views!");
         },
 
         needsTopBar: function() {
@@ -39,7 +53,6 @@ define(["mobileui/ui/app-card-view"], function(AppCardView) {
 
         render: function() {
             this.$el.addClass("js-slide-view");
-            this.$el.html(this._template);
             return SlideView.__super__.render.call(this);
         }
     });
