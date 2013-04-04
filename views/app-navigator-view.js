@@ -43,7 +43,7 @@ define(['mobileui/ui/navigator-view',
             var topBar = this.topBarView();
 
             this._titleLabel = new ContentView()
-                .setTextContent("MobileUI")
+                .setTextContent("CSS Performance Presentation")
                 .matchParentSize()
                 .setIsPositioned(true)
                 .matchLineHeight();

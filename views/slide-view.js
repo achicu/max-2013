@@ -17,8 +17,28 @@
 define(["mobileui/ui/app-card-view"], function(AppCardView) {
 
     var SlideView = AppCardView.extend({
+        initialize: function() {
+            SlideView.__super__.initialize.call(this);
+            this.addGestureDetector();
+            this.on("tap", this._onTap, this);
+            this._needsTopBar = false;
+        },
+
+        needsTopBar: function() {
+            return this._needsTopBar;
+        },
+
+        hasLayoutMarginFromTopBar: function() {
+            return false;
+        },
+
+        _onTap: function() {
+            this._needsTopBar = !this._needsTopBar;
+            this._updateNavigationBar();
+        },
+
         render: function() {
-            this.$el.css("background-color", "white");
+            this.$el.addClass("js-slide-view");
             this.$el.html(this._template);
             return SlideView.__super__.render.call(this);
         }
