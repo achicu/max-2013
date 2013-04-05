@@ -19,7 +19,7 @@ define(["mobileui/utils/template-module"],
 
     var SlideModule = _.extend({}, TemplateModule, {
         defaultOptions: {
-            base: "views/slide-view",
+            base: "views/slide-container-view",
             label: ""
         },
         modulePath: "utils/slide-module"

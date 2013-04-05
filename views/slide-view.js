@@ -16,11 +16,9 @@
 
 define(["mobileui/ui/app-card-view",
         "mobileui/ui/touch-item-view",
-        "mobileui/utils/view-injector",
         "mobileui/utils/bus"],
-    function(AppCardView, TouchItemView, ViewInjector, bus) {
+    function(AppCardView, TouchItemView, bus) {
 
-    var viewInjector = new ViewInjector();
     var needsTopBar = false;
 
     var SlideItemView = TouchItemView.extend({
@@ -35,7 +33,7 @@ define(["mobileui/ui/app-card-view",
         },
 
         _onTapStart: function() {
-            this.listView().prepareNextSlide();
+            this.listView().prepareNextCard();
         },
 
         _onTap: function(touch) {
@@ -46,7 +44,7 @@ define(["mobileui/ui/app-card-view",
     var SlideView = AppCardView.extend({
         initialize: function() {
             SlideView.__super__.initialize.call(this);
-            
+
             this._contentView = new SlideItemView().setListView(this);
             this.append(this._contentView.render());
 
@@ -54,11 +52,24 @@ define(["mobileui/ui/app-card-view",
             this.on("views:injected", this._onViewsInjected, this);
             this.on("tap", this._onTap, this);
 
-            var self = this;
-            this._contentView.filterView().$el.html(this._template);
-            viewInjector.convert(this, this._contentView.filterView()).then(function() {
-                self.trigger("views:injected");
-            });
+            this._slideContentView = null;
+        },
+
+        setSlideContentView: function(slideContentView) {
+            if (this._slideContentView) {
+                this._slideContentView.remove();
+                this._slideContentView = null;
+            }
+            if (slideContentView) {
+                this._slideContentView = slideContentView;
+                slideContentView.matchParentSize();
+                this._contentView.filterView().append(slideContentView);
+            }
+            return this;
+        },
+
+        slideContentView: function() {
+            return this._slideContentView;
         },
 
         _onDeactivate: function() {
@@ -77,28 +88,36 @@ define(["mobileui/ui/app-card-view",
             return false;
         },
 
-        prepareNextSlide: function() {
+        prepareNextCard: function() {
             if (this.navigatorView().nextCard())
                 return;
-            var nextCard = bus.get("slideManager").lookupNextSlide(this);
+            var nextCard = this.nextCard();
             if (nextCard)
                 this.navigatorView().prepareNextCard(nextCard);
         },
 
+        hasNextCard: function() {
+            return this._slideContentView ? bus.get("slideManager").hasNextSlide(this._slideContentView) : false;
+        },
+
+        nextSlide: function() {
+            return this._slideContentView ? bus.get("slideManager").lookupNextSlide(this._slideContentView) : null;
+        },
+
+        nextCard: function() {
+            return SlideView.encapsulateSlide(this.nextSlide());
+        },
+
         hasPreviousCard: function() {
-            return bus.get("slideManager").hasPreviousSlide(this);
+            return this._slideContentView ? bus.get("slideManager").hasPreviousSlide(this._slideContentView) : false;
+        },
+
+        previousSlide: function() {
+            return this._slideContentView ? bus.get("slideManager").lookupPreviousSlide(this._slideContentView) : null;
         },
 
         previousCard: function() {
-            return bus.get("slideManager").lookupPreviousSlide(this);
-        },
-
-        preparePreviousSlide: function() {
-            if (this.navigatorView().nextCard())
-                return;
-            var previousCard = this.previousCard();
-            if (previousCard)
-                this.navigatorView().prepareNextCard(nextCard);
+            return SlideView.encapsulateSlide(this.previousSlide());
         },
 
         _onTap: function() {
@@ -112,7 +131,7 @@ define(["mobileui/ui/app-card-view",
         },
 
         url: function() {
-            return "slide/" + encodeURIComponent(this.constructor.label);
+            return this._slideContentView ? "slide/" + encodeURIComponent(this._slideContentView.constructor.label) : null;
         },
 
         updateRouterLocation: function() {
@@ -120,6 +139,10 @@ define(["mobileui/ui/app-card-view",
             if (!url)
                 return;
             bus.get("router").navigate(url, { trigger: false });
+        }
+    }, {
+        encapsulateSlide: function(slide) {
+            return slide ? new SlideView().setSlideContentView(slide).render() : null;
         }
     });
 

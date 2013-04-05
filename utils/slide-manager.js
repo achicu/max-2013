@@ -36,9 +36,17 @@ define(["mobileui/utils/bus", "slides/list"], function(bus, SlideList) {
             return this.createSlide(ViewItem, pathOptions);
         },
 
+        _nextSlideConstructor: function(view) {
+            var index = _.indexOf(SlideList, view.constructor);
+            return index == -1 ? SlideList[0] : SlideList[index + 1];
+        },
+
+        hasNextSlide: function(view) {
+            return !!this._nextSlideConstructor(view);
+        },
+
         lookupNextSlide: function(view, pathOptions) {
-            var index = _.indexOf(SlideList, view.constructor),
-                ViewItem = index == -1 ? SlideList[0] : SlideList[index + 1];
+            var ViewItem = this._nextSlideConstructor(view);
             return ViewItem ? this.createSlide(ViewItem, pathOptions) : null;
         },
 

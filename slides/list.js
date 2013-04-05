@@ -14,7 +14,14 @@
  * limitations under the License.
  */
 define(["utils/slide-module!slides/index.html?label=index",
-        "utils/slide-module!slides/slide1.html?label=slide1"
+        "utils/slide-module!slides/slide1.html?label=slide1",
+        "utils/slide-module!slides/slide1.html?label=slide2",
+        "utils/slide-module!slides/slide1.html?label=slide3",
+        "utils/slide-module!slides/slide1.html?label=slide4",
+        "utils/slide-module!slides/slide1.html?label=slide5",
+        "utils/slide-module!slides/slide1.html?label=slide6",
+        "utils/slide-module!slides/slide1.html?label=slide7",
+        "utils/slide-module!slides/slide1.html?label=slide8"
        ], function() {
     return _.toArray(arguments);
 });

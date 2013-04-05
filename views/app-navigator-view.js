@@ -18,9 +18,11 @@ define(['mobileui/ui/navigator-view',
         'mobileui/views/content-view',
         'mobileui/ui/button-view',
         'views/app-settings-dialog-view',
+        'views/slide-list-dialog-view',
+        'views/slide-view',
         'mobileui/utils/settings',
         'mobileui/utils/lock',
-        'mobileui/utils/bus'], function(NavigatorView, ContentView, ButtonView, AppSettingsDialogView, settings, lock, bus) {
+        'mobileui/utils/bus'], function(NavigatorView, ContentView, ButtonView, AppSettingsDialogView, SlideListDialogView, SlideView, settings, lock, bus) {
 
     var AppNavigatorView = NavigatorView.extend({
 
@@ -61,6 +63,12 @@ define(['mobileui/ui/navigator-view',
             topBar.append(this._homeButton.render().addClass("dark-button"));
 
             topBar.appendFiller();
+
+            this._slidesButton = new ButtonView().setLabel("Slides")
+                .on("tap", this._onSlidesButtonTap, this);
+            this._slidesButton.margin().setRight(5).setTop(5);
+            this._slidesButton.bounds().setWidth(80);
+            topBar.append(this._slidesButton.render().addClass("dark-button"));
 
             this._settingsButton = new ButtonView().setLabel("Settings")
                 .on("tap", this._onSettingsButtonTap, this);
@@ -110,6 +118,25 @@ define(['mobileui/ui/navigator-view',
         _onSettingsViewHidden: function() {
             this._settingsView.remove();
             this._settingsView = null;
+        },
+
+        _onSlidesButtonTap: function() {
+            if (this._slidesView)
+                return;
+            this._slidesView = new SlideListDialogView()
+                .once("hide", this._onSlidesViewHidden, this)
+                .on("slide:selected", this._onSlideSelected, this)
+                .render()
+                .show();
+        },
+
+        _onSlideSelected: function(SlideConstructor) {
+            this.pushCard(SlideView.encapsulateSlide(new SlideConstructor().render()));
+        },
+
+        _onSlidesViewHidden: function() {
+            this._slidesView.remove();
+            this._slidesView = null;
         }
 
     });
