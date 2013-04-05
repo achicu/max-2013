@@ -26,6 +26,7 @@ define(['mobileui/ui/navigator-view',
 
         initialize: function() {
             AppNavigatorView.__super__.initialize.call(this);
+            this.setUsesHistory(false);
             this.topBarView().addClass("dark-header-bar");
             this.addTopBarButtons();
 

@@ -85,6 +85,22 @@ define(["mobileui/ui/app-card-view",
                 this.navigatorView().prepareNextCard(nextCard);
         },
 
+        hasPreviousCard: function() {
+            return bus.get("slideManager").hasPreviousSlide(this);
+        },
+
+        previousCard: function() {
+            return bus.get("slideManager").lookupPreviousSlide(this);
+        },
+
+        preparePreviousSlide: function() {
+            if (this.navigatorView().nextCard())
+                return;
+            var previousCard = this.previousCard();
+            if (previousCard)
+                this.navigatorView().prepareNextCard(nextCard);
+        },
+
         _onTap: function() {
             needsTopBar = !needsTopBar;
             this._updateNavigationBar();
