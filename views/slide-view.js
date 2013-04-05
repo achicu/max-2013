@@ -93,6 +93,17 @@ define(["mobileui/ui/app-card-view",
         render: function() {
             this.$el.addClass("js-slide-view");
             return SlideView.__super__.render.call(this);
+        },
+
+        url: function() {
+            return "slide/" + encodeURIComponent(this.constructor.label);
+        },
+
+        updateRouterLocation: function() {
+            var url = this.url();
+            if (!url)
+                return;
+            bus.get("router").navigate(url, { trigger: false });
         }
     });
 
