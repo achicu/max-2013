@@ -6,6 +6,5 @@
     },
     "stubModules": ["third-party/underscore"],
     "name": "main",
-    "out": "dist/main.min.js",
-    "optimize": "none"
+    "out": "dist/main.min.js"
 }
