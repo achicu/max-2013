@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 define(["utils/slide-module!slides/index.html?label=index",
-        "utils/slide-module!slides/slide1.html?label=slide1",
-        "utils/slide-module!slides/slide1.html?label=slide2",
-        "utils/slide-module!slides/slide1.html?label=slide3",
-        "utils/slide-module!slides/slide1.html?label=slide4",
-        "utils/slide-module!slides/slide1.html?label=slide5",
-        "utils/slide-module!slides/slide1.html?label=slide6",
-        "utils/slide-module!slides/slide1.html?label=slide7",
-        "utils/slide-module!slides/slide1.html?label=slide8"
+        "utils/slide-module!slides/about-me.html?label=about-me",
+        "utils/slide-module!slides/web-features.html?label=web-features",
+        "utils/slide-module!slides/app-cache.html?label=app-cache",
+        "utils/slide-module!slides/web-storage.html?label=web-storage",
+        "utils/slide-module!slides/touch-gestures.html?label=touch-gestures",
+        "utils/slide-module!slides/touch-combined.html?label=touch-combined",
+        "utils/slide-module!slides/touch-platforms.html?label=touch-platforms",
+        "utils/slide-module!slides/accelerated-properties.html?label=accelerated-properties",
+        "utils/slide-module!slides/performance1.html?label=performance1",
+        "utils/slide-module!slides/performance2.html?label=performance2",
+        "utils/slide-module!slides/performance3.html?label=performance3",
+        "utils/slide-module!slides/web-workers.html?label=web-workers",
+        "utils/slide-module!slides/end.html?label=end"
        ], function() {
     return _.toArray(arguments);
 });
