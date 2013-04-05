@@ -16,18 +16,38 @@
 
 define(["mobileui/views/layer-view",
         "mobileui/utils/view-injector",
+        "mobileui/utils/rect",
         "mobileui/utils/bus"],
-    function(LayerView, ViewInjector, bus) {
+    function(LayerView, ViewInjector, Rect, bus) {
+
+    var defaultSlideRect = new Rect().setSize(1024, 768);
 
     var SlideContainerView = LayerView.extend({
         initialize: function() {
             SlideContainerView.__super__.initialize.call(this);
+            this._slideBounds = new Rect()
+                .set(defaultSlideRect)
+                .on("change:size", this._onSlideBoundsChanged, this);
+
+            this._contentView = new LayerView()
+                .addClass("js-slide-container-content-view");
+            this._contentView.bounds().set(this._slideBounds);
+            this.append(this._contentView.render());
+            
             var self = this;
-            this.$el.html(this._template);
+            this._contentView.$el.html(this._template);
             var viewInjector = new ViewInjector();
-            viewInjector.convert(this).then(function() {
+            viewInjector.convert(this, this._contentView).then(function() {
                 self.trigger("views:injected");
             });
+        },
+
+        _onSlideBoundsChanged: function() {
+            this.validate("slideBounds");
+        },
+
+        slideBounds: function() {
+            return this._slideBounds;
         },
 
         _onViewsInjected: function() {
@@ -37,6 +57,23 @@ define(["mobileui/views/layer-view",
         render: function() {
             this.$el.addClass("js-slide-container-view");
             return SlideContainerView.__super__.render.call(this);
+        },
+
+        layout: function() {
+            SlideContainerView.__super__.layout.call(this);
+            this._validateSlideBounds();
+        },
+
+        _validateSlideBounds: function() {
+            var factorX = this.bounds().width() / this._slideBounds.width(),
+                factorY = this.bounds().height() / this._slideBounds.height(),
+                scaleFactor = Math.min(factorX, factorY);
+            this._contentView.transform().get("translate")
+                .setX((this.bounds().width() - this._slideBounds.width() * scaleFactor) / 2)
+                .setY((this.bounds().height() - this._slideBounds.height() * scaleFactor) / 2);
+            this._contentView.transform().get("scale")
+                .setX(scaleFactor)
+                .setY(scaleFactor);
         }
     });
 
