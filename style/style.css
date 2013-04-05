@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-.js-slide-view {
-    background-color: white;
+.js-slide-item-view {
+    background-color: cyan;
 }
 
 a.js-link-view.js-button-view-down {

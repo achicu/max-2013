@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-define(["mobileui/utils/bus", "slides/list"],
-    function(bus, SlideList) {
+define(["mobileui/utils/bus", "utils/slide-manager"],
+    function(bus, slideManager) {
 
     var Router = Backbone.Router.extend({
         routes: {
@@ -25,27 +25,15 @@ define(["mobileui/utils/bus", "slides/list"],
         },
 
         defaultHandler: function() {
-            var view = this.lookupSlide("index");
+            var view = slideManager.lookupSlide("index");
             if (view)
                 bus.get("mainView").navigatorView().resetCard(view);
         },
 
         slide: function(path, pathOptions) {
-            var view = this.lookupSlide(decodeURIComponent(path), pathOptions);
+            var view = slideManager.lookupSlide(decodeURIComponent(path), pathOptions);
             if (view)
                 bus.get("mainView").navigatorView().resetCard(view);
-        },
-
-        lookupSlide: function(label, pathOptions) {
-            var ViewItem = _.find(SlideList, function(item) {
-                return item.label == label;
-            });
-            if (!ViewItem)
-                return null;
-            var view = new ViewItem({
-                path: pathOptions
-            }).render();
-            return view;
         }
     });
 
