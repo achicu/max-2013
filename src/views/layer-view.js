@@ -53,6 +53,9 @@ define(["mobileui/utils/rect",
             this._needsTouchEvents = false;
             this._visible = true;
             this._disabled = false;
+
+            // Static views will use CSS Layout instead of computing the layout in JS.
+            this._isStaticView = false;
         },
 
         inlineUpdate: function() {
@@ -69,6 +72,23 @@ define(["mobileui/utils/rect",
                     this.removeTouchEvents();
             }
             this._needsTouchEvents = value;
+            return this;
+        },
+
+        isStaticView: function() {
+            return this._isStaticView;
+        },
+
+        setIsStaticView: function(value) {
+            if (this._isStaticView == value)
+                return;
+            this._isStaticView = value;
+            this.invalidate("staticViewClassName");
+            if (this._isStaticView) {
+                // Make sure that we get up to date values.
+                this.invalidate("position");
+                this.invalidate("size");
+            }
             return this;
         },
 
@@ -362,6 +382,8 @@ define(["mobileui/utils/rect",
         },
 
         layoutBounds: function() {
+            if (this._isStaticView)
+                return;
             var params = this.params();
             if (!params)
                 return;
@@ -563,12 +585,16 @@ define(["mobileui/utils/rect",
         },
 
         _validatePosition: function() {
+            if (this._isStaticView)
+                return;
             this.$el
                 .css("left", this._bounds.x())
                 .css("top", this._bounds.y());
         },
 
         _validateSize: function() {
+            if (this._isStaticView)
+                return;
             this.$el
                 .css("width", this._bounds.width())
                 .css("height", this._bounds.height());
@@ -607,6 +633,10 @@ define(["mobileui/utils/rect",
 
         _validateMargin: function() {
             this.$el.css("margin", this._margin.toCSSString("px"));
+        },
+
+        _validateStaticViewClassName: function() {
+            this.$el.toggleClass("js-static-view", this._isStaticView);
         },
 
         _onPositionChanged: function() {

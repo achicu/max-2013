@@ -24,7 +24,6 @@ body {
 
 .js-static-view {
     position: static;
-    display: inline-block;
 }
 
 .js-layer-view-invisible {

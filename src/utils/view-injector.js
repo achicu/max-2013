@@ -20,6 +20,7 @@ define(["require"], function(require) {
         this.globalView = globalView;
         this.parentView = parentView;
         this.parentState = null;
+        this._createsStaticViews = false;
     }
 
     _.extend(InjectorState.prototype, {
@@ -44,6 +45,18 @@ define(["require"], function(require) {
                 globalView[setterName].call(globalView, view);
             else
                 globalView[name] = view;
+        },
+
+        createStaticViews: function() {
+            return this._createsStaticViews;
+        },
+
+        newStateWithStaticViews: function() {
+            if (this._createsStaticViews)
+                return this;
+            var state = new InjectorState(this.globalView, this.parentView);
+            state._createsStaticViews = true;
+            return state;
         }
     });
 
@@ -59,7 +72,7 @@ define(["require"], function(require) {
                 child = $(child);
                 var viewName = child.attr("data-view");
                 if (viewName === undefined) {
-                    var childrenWait = self.convertViews(state, child.children());
+                    var childrenWait = self.convertViews(state.newStateWithStaticViews(), child.children());
                     if (childrenWait)
                         waitList.push(childrenWait);
                     return;
@@ -68,8 +81,10 @@ define(["require"], function(require) {
                 // during the compile time. Shall we preparse the content?
                 var requireWait = $.Deferred();
                 require([viewName], function(ViewConstructor) {
-                    var view = new ViewConstructor({ el: child }),
-                        newState = state.pushView(view),
+                    var view = new ViewConstructor({ el: child });
+                    if (state.createStaticViews())
+                        view.setIsStaticView(true);
+                    var newState = state.pushView(view),
                         childrenWait = self.convertViews(newState, child.children());
                     $.when(childrenWait).then(function() {
                         requireWait.resolve();
