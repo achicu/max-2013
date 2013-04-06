@@ -16,7 +16,9 @@
 
 define(["mobileui/ui/app-card-view",
         "mobileui/ui/touch-item-view",
-        "mobileui/utils/bus"],
+        "mobileui/utils/bus",
+        // Make sure that the container view is preloaded by the optimizer.
+        "views/slide-container-view"],
     function(AppCardView, TouchItemView, bus) {
 
     var needsTopBar = false;

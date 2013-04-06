@@ -19,7 +19,8 @@ define([
     'mobileui/utils/settings',
     // Router and MainView automatically inject in the bus.
     'router',
-    'views/main-view'
+    'views/main-view',
+    'mobileui/utils/less-module!style/slides.less'
 ],
 
 function(bus, settings) {
