@@ -47,6 +47,11 @@ define(['mobileui/views/layout-view',
             this.append(this._contentView);
             this._canShow = true;
             this._canHide = true;
+            this._isActive = false;
+        },
+
+        isActive: function() {
+            return this._isActive;
         },
 
         contentView: function() {
@@ -129,17 +134,22 @@ define(['mobileui/views/layout-view',
                 this._attachedView.setDisabled(false);
             }
             this._attachedView = null;
-            this.detach();
+            this.setVisible(false);
             this.trigger("hide");
         },
 
         show: function() {
+            if (this._isActive)
+                return;
+            this._isActive = true;
             if (activeDialogView) {
                 activeDialogView._canHide = false;
                 this._canShow = false;
             }
             activeDialogView = this;
-            WindowView.instance.append(this);
+            this.setVisible(true);
+            if (this.parent() !== WindowView.instance)
+                WindowView.instance.append(this);
             this._attachedView = WindowView.instance.contentView();
             if (this._attachedView)
                 this._attachedView.setDisabled(true);
@@ -149,6 +159,9 @@ define(['mobileui/views/layout-view',
         },
 
         hide: function() {
+            if (!this._isActive)
+                return;
+            this._isActive = false;
             this.invalidate("hideAnimation");
             return this;
         },
