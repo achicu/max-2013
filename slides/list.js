@@ -25,6 +25,7 @@ define(["utils/slide-module!slides/index.html?label=index",
         "utils/slide-module!slides/performance1.html?label=performance1",
         "utils/slide-module!slides/performance2.html?label=performance2",
         "utils/slide-module!slides/performance3.html?label=performance3",
+        "utils/slide-module!slides/dom-remove.html?label=dom-remove",
         "utils/slide-module!slides/web-workers.html?label=web-workers",
         "utils/slide-module!slides/end.html?label=end"
        ], function() {

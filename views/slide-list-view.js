@@ -35,7 +35,9 @@ define(["mobileui/views/scroll-view",
             var self = this;
             _.each(SlidesList, function(SlideView) {
                 var itemView = new LayerView()
+                    .forceLayer()
                     .addClass("js-slide-list-item-view");
+                itemView.margin().setAll(15);
                 itemView.ensureParams().matchParentHeight();
                 itemView.bounds().setWidth(200);
                 contentView.append(itemView.render());
@@ -43,7 +45,8 @@ define(["mobileui/views/scroll-view",
                 var slide = new SlideView().matchParentSize();
                 itemView.append(slide.render());
                 
-                var tapView = new ButtonView();
+                var tapView = new ButtonView()
+                    .addClass("js-slide-list-button-view");
                 tapView.matchParentSize()
                        .on("tap", self._onSlideSelected.bind(self, SlideView));
                 itemView.append(tapView.render());
