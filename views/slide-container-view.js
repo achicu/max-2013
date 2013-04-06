@@ -34,10 +34,8 @@ define(["mobileui/views/layer-view",
 
             this._contentView = new LayerView()
                 .addClass("js-slide-container-content-view");
-            if (this.constructor.label) {
-                console.log(this.constructor.label);
+            if (this.constructor.label)
                 this._contentView.addClass("js-slide-" + this.constructor.label);
-            }
             this._contentView.bounds().set(this._slideBounds);
             this.append(this._contentView.render());
             
