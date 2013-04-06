@@ -33,6 +33,10 @@ define(["mobileui/utils/underscore", "mobileui/utils/load-module"],
                                ";});\n";
         },
 
+        createModuleAsync: function(content, moduleName, parsedName, callback) {
+            callback(this.createModule(content, moduleName, parsedName));
+        },
+
         encodeContentAsync: function(content, moduleName, parsedName, callback) {
             callback(this.encodeContent(content, moduleName, parsedName));
         },
@@ -57,21 +61,25 @@ define(["mobileui/utils/underscore", "mobileui/utils/load-module"],
             return options;
         },
 
-        saveModuleContent: function(content, moduleName, parsedName) {
+        _saveModuleContentAsync: function(content, moduleName, parsedName, callback) {
             if (!this._buildMap)
                 this._buildMap = {};
-            this._buildMap[moduleName] = this.createModule(content, moduleName, parsedName);
+            var self = this;
+            this.createModuleAsync(content, moduleName, parsedName, function(moduleContent) {
+                self._buildMap[moduleName] = moduleContent;
+                callback();
+            });
         },
 
         load: function (moduleName, req, onLoad, config) {
             var self = this,
                 parsedName = this.parseName(moduleName),
                 url = req.toUrl(parsedName.file);
-            
+
             fileLoader(url, function (content) {
                 if (config.isBuild) {
-                    self.saveModuleContent(content, moduleName, parsedName);
-                    onLoad();
+                    self._saveModuleContentAsync(content, moduleName, parsedName, onLoad);
+                    return;
                 }
                 self.encodeContentAsync(content, moduleName, parsedName, onLoad);
             }, function (err) {
