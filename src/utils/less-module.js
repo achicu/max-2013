@@ -52,7 +52,7 @@ define(['mobileui/utils/underscore', 'mobileui/utils/style-module', 'require'], 
                         return callback(null);
                     }
                     css = css.toCSS();
-                    callback(global.navigator ? self.injectStyle(css, moduleName) : css);
+                    callback(global.navigator ? self.injectStyle(css, moduleName, parsedName) : css);
                 });
             });
         }

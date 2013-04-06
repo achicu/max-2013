@@ -71,10 +71,16 @@ define(["mobileui/utils/underscore", "mobileui/utils/load-module"],
             });
         },
 
+        onLoadStarted: function(moduleName, parsedName) {
+            return null;
+        },
+
         load: function (moduleName, req, onLoad, config) {
             var self = this,
                 parsedName = this.parseName(moduleName),
                 url = req.toUrl(parsedName.file);
+
+            this.onLoadStarted(moduleName, parsedName);
 
             fileLoader(url, function (content) {
                 if (config.isBuild) {
