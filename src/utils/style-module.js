@@ -34,7 +34,7 @@ define(['mobileui/utils/underscore', 'mobileui/utils/text-module'], function (_,
         },
 
         encodeContent: function(content, moduleName) {
-            return !global.navigator ? this.injectStyle(content, moduleName) : content;
+            return global.navigator ? this.injectStyle(content, moduleName) : content;
         },
 
         createModuleAsync: function(content, moduleName, parsedName, callback) {
