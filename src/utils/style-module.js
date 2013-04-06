@@ -42,7 +42,7 @@ define(['mobileui/utils/underscore', 'mobileui/utils/text-module'], function (_,
             this.encodeContentAsync(content, moduleName, parsedName, function(encodedContent) {
                 var code = "define(" + JSON.stringify([self.modulePath]) + ", " +
                 "function(StyleModule) { return StyleModule.injectStyle(" +
-                           JSON.stringify((content, moduleName)) + ", " + 
+                           JSON.stringify(encodedContent) + ", " + 
                            JSON.stringify(moduleName) +
                            "); });\n";
                 callback(code);
