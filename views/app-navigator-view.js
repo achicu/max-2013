@@ -121,22 +121,18 @@ define(['mobileui/ui/navigator-view',
         },
 
         _onSlidesButtonTap: function() {
-            if (this._slidesView)
+            if (this._slidesView && this._slidesView.isActive())
                 return;
-            this._slidesView = new SlideListDialogView()
-                .once("hide", this._onSlidesViewHidden, this)
-                .on("slide:selected", this._onSlideSelected, this)
-                .render()
-                .show();
+            if (!this._slidesView) {
+                this._slidesView = new SlideListDialogView()
+                    .on("slide:selected", this._onSlideSelected, this)
+                    .render();
+            }
+            this._slidesView.show();
         },
 
         _onSlideSelected: function(SlideConstructor) {
             this.pushCard(SlideView.encapsulateSlide(new SlideConstructor().render()));
-        },
-
-        _onSlidesViewHidden: function() {
-            this._slidesView.remove();
-            this._slidesView = null;
         }
 
     });
