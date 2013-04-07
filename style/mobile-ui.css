@@ -38,6 +38,10 @@ body {
     position: absolute;
 }
 
+.js-transform-view, .js-pan-view {
+    transform-origin: 0 0;
+}
+
 .js-scroll-view {
     overflow: hidden;
 }

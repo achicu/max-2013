@@ -6,7 +6,7 @@ define(function() {
         },
 
         angle: function(x1, y1, x2, y2) {
-            var cos = (x1 * x2 + y1 * y2) / (dist(0, 0, x1, y1) * dist(0, 0, x2, y2));
+            var cos = (x1 * x2 + y1 * y2) / (Geometry.dist(0, 0, x1, y1) * Geometry.dist(0, 0, x2, y2));
             return Math.acos(cos) * 180 / Math.PI;
         },
 

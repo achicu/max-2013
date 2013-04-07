@@ -22,7 +22,7 @@ define(function() {
         });
     }
 
-    function generateFunction(name, parameters, units, is3DTransform, keysGenerator) {
+    function generateFunction(name, parameters, units, defaultValues, is3DTransform, keysGenerator) {
         if (!_.isArray(parameters))
             parameters = parameters.split(" ");
         var keys = keysGenerator ? keysGenerator(parameters) : _.map(parameters, function(name) {
@@ -31,17 +31,18 @@ define(function() {
         var fn = function() {
             var self = this, args = arguments;
             _.each(parameters, function(parameter, i) {
-                self[keys[i]] = (i < args.length) ? args[i] : 0;
+                self[keys[i]] = (i < args.length) ? args[i] : defaultValues[i];
             });
         };
         _.extend(fn, {
             create: function() {
                 var self = new fn(), args = arguments;
                 _.each(parameters, function(parameter, i) {
-                    self[keys[i]] = (i < args.length) ? args[i] : 0;
+                    self[keys[i]] = (i < args.length) ? args[i] : defaultValues[i];
                 });
                 return self;
-            }
+            },
+            defaultValue: new fn()
         });
         _.extend(fn.prototype, Backbone.Events, {
             type: fn,
@@ -106,20 +107,21 @@ define(function() {
     }
 
     var Transforms = {
-        rotate: generateFunction("rotate", "angle", "deg", false),
-        rotateX: generateFunction("rotateX", "angle", "deg", true),
-        rotateY: generateFunction("rotateY", "angle", "deg", true),
-        rotateZ: generateFunction("rotateZ", "angle", "deg", false),
-        translate: generateFunction("translate", "x y", "px", false),
-        translateX: generateFunction("translateX", "x", "px", false),
-        translateY: generateFunction("translateY", "y", "px", false),
-        translateZ: generateFunction("translateZ", "z", "px", true),
-        translate3d: generateFunction("translate3d", "x y z", "px", true),
-        scale: generateFunction("scale", "x y", "", false),
-        perspective: generateFunction("perspective", "depth", "", true),
-        matrix: generateFunction("matrix", "a b c d e f", "", false, matrixKeyGenerator),
+        rotate: generateFunction("rotate", "angle", "deg", [0], false),
+        rotateX: generateFunction("rotateX", "angle", "deg", [0], true),
+        rotateY: generateFunction("rotateY", "angle", "deg", [0], true),
+        rotateZ: generateFunction("rotateZ", "angle", "deg", [0], false),
+        translate: generateFunction("translate", "x y", "px", [0, 0], false),
+        translateX: generateFunction("translateX", "x", "px", [0], false),
+        translateY: generateFunction("translateY", "y", "px", [0], false),
+        translateZ: generateFunction("translateZ", "z", "px", [0], true),
+        translate3d: generateFunction("translate3d", "x y z", "px", [0, 0, 0], true),
+        scale: generateFunction("scale", "x y", "", [1, 1], false),
+        perspective: generateFunction("perspective", "depth", "", [1000], true),
+        matrix: generateFunction("matrix", "a b c d e f", "", [1, 0, 0, 1, 0, 0], false, matrixKeyGenerator),
         matrix3d: generateFunction("matrix3d",
-            "a11 a21 a31 a41 a21 a22 a23 a24 a31 a32 a33 a34 a41 a42 a43 a44", "",
+            "a11 a21 a31 a41 a12 a22 a32 a42 a13 a23 a33 a43 a14 a24 a34 a44", "",
+            [1, 0, 0, 0,  0, 1, 0, 0,  0, 0, 1, 0,  0, 0, 0, 1],
             true, matrixKeyGenerator)
     };
 
@@ -262,7 +264,7 @@ define(function() {
         _fromZeroBlend: function(percent, other) {
             var transform = new Transform();
             _.each(other._data, function(fn, i) {
-                transform.append(fn.multiply(percent));
+                transform.append(fn.blend(percent, fn.type.defaultValue));
             });
             return transform;
         },
@@ -270,7 +272,7 @@ define(function() {
         _toZeroBlend: function(percent) {
             var transform = new Transform();
             _.each(this._data, function(fn, i) {
-                transform.append(fn.multiply(percent));
+                transform.append(fn.blend(1 - percent, fn.type.defaultValue));
             });
             return transform;
         },
@@ -294,6 +296,14 @@ define(function() {
             return transform;
         },
 
+        appendFrom: function(other) {
+            var self = this;
+            _.each(other._data, function(fn) {
+                self.append(fn);
+            });
+            return this;
+        },
+
         concat: function(other) {
             var transform = new Transform();
             _.each(this._data, function(fn) {
@@ -305,7 +315,7 @@ define(function() {
             return transform;
         }
     });
-    
+
     _.extend(Transform, Transforms, {
         rads: function(degs) {
             return degs * Math.PI / 180;
@@ -492,7 +502,7 @@ define(function() {
             for (var j = 1; j <= 4; ++j) {
                 for (var i = 1; i <= 4; ++i, index++) {
                     var value = m.e(i, j);
-                    if (this[index] == value)
+                    if (this[index] === value)
                         continue;
                     this[index] = value;
                     changed = true;
