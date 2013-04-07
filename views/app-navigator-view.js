@@ -16,13 +16,25 @@
 
 define(['mobileui/ui/navigator-view',
         'mobileui/views/content-view',
+        'mobileui/views/layer-view',
         'mobileui/ui/button-view',
         'views/app-settings-dialog-view',
         'views/slide-list-dialog-view',
         'views/slide-view',
         'mobileui/utils/settings',
         'mobileui/utils/lock',
-        'mobileui/utils/bus'], function(NavigatorView, ContentView, ButtonView, AppSettingsDialogView, SlideListDialogView, SlideView, settings, lock, bus) {
+        'mobileui/utils/bus'], function(NavigatorView, ContentView, LayerView, ButtonView, AppSettingsDialogView, SlideListDialogView, SlideView, settings, lock, bus) {
+
+    var LogoView = LayerView.extend({
+        layout: function() {
+            LogoView.__super__.layout.call(this);
+            var parent = this.parent();
+            this.bounds()
+                .setWidth(parent.bounds().width() / 20)
+                .setX(parent.bounds().width() - this.bounds().width() - this.margin().right())
+                .setY(parent.bounds().height());
+        }
+    });
 
     var AppNavigatorView = NavigatorView.extend({
 
@@ -75,6 +87,13 @@ define(['mobileui/ui/navigator-view',
             this._settingsButton.margin().setRight(5).setTop(5);
             this._settingsButton.bounds().setWidth(80);
             topBar.append(this._settingsButton.render().addClass("dark-button"));
+
+            this._logoView = new LogoView().forceLayer()
+                .setIsPositioned(true)
+                .addClass("js-logo-view");
+            this._logoView.bounds().setSize(50, 85);
+            this._logoView.margin().setRight(35);
+            topBar.append(this._logoView.render());
         },
 
         backButton: function() {
