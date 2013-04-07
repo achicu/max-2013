@@ -72,6 +72,14 @@ function(LayerView, LayoutParams, NavigatorTopBarView, NavigatorContentView) {
                 (this._activeCard && this._activeCard.hasPreviousCard());
         },
 
+        canGoForward: function() {
+            return this._activeCard && this._activeCard.hasNextCard();
+        },
+
+        forwardCard: function() {
+            return this._activeCard ? this._activeCard.nextCard() : null;
+        },
+
         previousCard: function() {
             var card = _.last(this._historyCards);
             if (!card && this._activeCard)
@@ -195,6 +203,8 @@ function(LayerView, LayoutParams, NavigatorTopBarView, NavigatorContentView) {
 
         pushCard: function(card, pushOptions) {
             this.revertNextCard();
+            if (!card)
+                card = this.forwardCard();
             var previousActiveCard = this._activeCard;
             if (this._activeCard) {
                 this._activeCard.trigger("deactivate");
@@ -205,7 +215,8 @@ function(LayerView, LayoutParams, NavigatorTopBarView, NavigatorContentView) {
             }
             var options = _.extend({
                 goingBack: false,
-                promise: null
+                promise: null,
+                previousCard: previousActiveCard
             }, pushOptions);
             if (card) {
                 this._activeCard = card;

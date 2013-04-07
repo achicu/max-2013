@@ -169,7 +169,6 @@ define(['mobileui/views/layout-view',
         _onBackgroundTap: function() {
             this.hide();
         }
-
     });
 
     return DialogView;

@@ -94,6 +94,14 @@ function(LayerView, LayoutParams) {
 
         hasPreviousCard: function() {
             return false;
+        },
+
+        nextCard: function() {
+            return null;
+        },
+
+        hasNextCard: function() {
+            return false;
         }
 
     });

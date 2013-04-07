@@ -176,12 +176,53 @@ define(["mobileui/ui/navigator-card-view",
 
         _onActivate: function(options) {
             AppCardView.__super__._onActivate.call(this, options);
-            if (!options.goingBack || !lock.canStartTransition())
+            if (!lock.canStartTransition())
                 return;
             var prevCard = options.previousCard;
-            if (!prevCard || !prevCard._animateBackButton)
+            if (!prevCard)
                 return;
-            prevCard._animateBackButton(this, options);
+            if (options.goingBack) {
+                if (prevCard._animateBackButton)
+                    prevCard._animateBackButton(this, options);
+            } else {
+                if (prevCard._animateForwardButton)
+                    prevCard._animateForwardButton(this, options);
+            }
+        },
+
+        _animateForwardButton: function(nextCard, options) {
+            var self = this;
+            lock.startTransition();
+            this._ensureGrayscaleOverlay();
+            this.parent().after(this._grayscaleOverlay, this);
+            var transform = new Transform().scale(this._backgroundViewScale, this._backgroundViewScale);
+            this.animation().start().get("slide-transform")
+                .chain()
+                .transform(300, transform)
+                .callback(function() {
+                    self._removeGrayscaleOverlay();
+                    nextCard.filter().clear();
+                    lock.endTransition(self);
+                });
+            this.animation().get("slide")
+                .chain()
+                .opacity(300, 0);
+            nextCard.animation().start().get("slide-filter")
+                .chain()
+                .filter(300, new Filter().grayscale(100), new Filter().grayscale(0));
+            nextCard.animation().get("slide-transform")
+                .chain()
+                .transform(300,
+                    new Transform().translate(this.bounds().width(), 0),
+                    new Transform())
+                .callback(function() {
+                    nextCard.transform().clear();
+                });
+            this._grayscaleOverlay.animation().start().get("slide-opacity")
+                .chain()
+                .opacity(300, this._backgroundViewOpacity, 0);
+
+            options.promise = this.animation().promise();
         },
 
         _animateBackButton: function(nextCard, options) {
