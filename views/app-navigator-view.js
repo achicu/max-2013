@@ -44,8 +44,10 @@ define(['mobileui/ui/navigator-view',
             this.topBarView().addClass("dark-header-bar");
             this.addTopBarButtons();
 
-            this.on("card:precommit", this._updateBackButton, this);
-            this.on("activate", this._updateBackButton, this);
+            this.on("card:precommit", this._updateNavigationButtons, this);
+            this.on("activate", this._updateNavigationButtons, this);
+
+            this.on("keydown", this._onKeyDown, this);
         },
 
         render: function() {
@@ -64,15 +66,15 @@ define(['mobileui/ui/navigator-view',
                 .matchLineHeight();
             topBar.append(this._titleLabel.render().addClass("js-navigator-top-bar-title-view"));
 
-            this._backButton = new ButtonView().setLabel("Back")
+            this._backButton = new ButtonView().setLabel("<")
                 .on("tap", this._onBackButtonTap, this);
             this._backButton.margin().setLeft(5).setTop(5);
             topBar.append(this._backButton.render().addClass("dark-button"));
 
-            this._homeButton = new ButtonView().setLabel("Home")
-                .on("tap", this._onBackButtonTap, this);
-            this._homeButton.margin().setLeft(5).setTop(5);
-            topBar.append(this._homeButton.render().addClass("dark-button"));
+            this._nextButton = new ButtonView().setLabel(">")
+                .on("tap", this._onNextButtonTap, this);
+            this._nextButton.margin().setLeft(5).setTop(5);
+            topBar.append(this._nextButton.render().addClass("dark-button"));
 
             topBar.appendFiller();
 
@@ -100,29 +102,26 @@ define(['mobileui/ui/navigator-view',
             return this._backButton;
         },
 
-        homeButton: function() {
-            return this._homeButton;
+        nextButton: function() {
+            return this._nextButton;
         },
 
-        _updateBackButton: function() {
-            if (this.canGoBack()) {
-                this._backButton.show();
-                this._homeButton.hide();
-            } else {
-                this._backButton.hide();
-                if (this.activeCard() && this.activeCard().isDefaultScreen) {
-                    this._homeButton.hide();
-                } else {
-                    this._homeButton.show();
-                }
-            }
+        _updateNavigationButtons: function() {
+            this._backButton.setVisible(this.canGoBack());
+            this._nextButton.setVisible(this.canGoForward());
         },
 
         _onBackButtonTap: function() {
-            if (!lock.canStartTransition())
+            if (!lock.canStartTransition() || !this.canGoBack())
                 return;
             if (!this.popCard())
                 bus.get("router").defaultHandler();
+        },
+
+        _onNextButtonTap: function() {
+            if (!lock.canStartTransition() || !this.canGoForward())
+                return;
+            this.pushCard();
         },
 
         _onSettingsButtonTap: function() {
@@ -152,6 +151,16 @@ define(['mobileui/ui/navigator-view',
 
         _onSlideSelected: function(SlideConstructor) {
             this.pushCard(SlideView.encapsulateSlide(SlideConstructor));
+        },
+
+        _onKeyDown: function() {
+            switch (event.keyCode) {
+                case 37: // prev
+                    return this._onBackButtonTap();
+                case 32: // space
+                case 39: // next
+                    return this._onNextButtonTap();
+            }
         }
 
     });

@@ -37,7 +37,7 @@ define(["mobileui/utils/bus", "slides/list"], function(bus, SlideList) {
         },
 
         hasNextSlide: function(view) {
-            return !!this._nextSlideConstructor(view);
+            return !!this.lookupNextSlide(view);
         },
 
         lookupPreviousSlide: function(view) {
