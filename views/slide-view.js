@@ -52,6 +52,7 @@ define(["mobileui/ui/app-card-view",
 
             this.on("deactivate", this._onDeactivate, this);
             this.on("tap", this._onTap, this);
+            this.on("keydown", this._onKeyDown, this);
 
             this._slideContentView = null;
         },
@@ -147,6 +148,20 @@ define(["mobileui/ui/app-card-view",
             // if user just navigates around.
             SlideView.recoverSlideView(this);
             return this;
+        },
+
+        _hideTopBar: function() {
+            if (!needsTopBar)
+                return;
+            needsTopBar = false;
+            this._updateNavigationBar();
+        },
+
+        _onKeyDown: function() {
+            switch (event.keyCode) {
+                case 27: // escape
+                    return this._hideTopBar();
+            }
         }
     }, {
         _cachedSlides: [],
