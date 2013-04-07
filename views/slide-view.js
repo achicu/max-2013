@@ -51,7 +51,6 @@ define(["mobileui/ui/app-card-view",
             this.append(this._contentView.render());
 
             this.on("deactivate", this._onDeactivate, this);
-            this.on("views:injected", this._onViewsInjected, this);
             this.on("tap", this._onTap, this);
 
             this._slideContentView = null;
@@ -76,10 +75,6 @@ define(["mobileui/ui/app-card-view",
 
         _onDeactivate: function() {
             this._contentView.resetAnimations();
-        },
-
-        _onViewsInjected: function() {
-            console.log("Loaded injected views!");
         },
 
         needsTopBar: function() {
@@ -141,10 +136,47 @@ define(["mobileui/ui/app-card-view",
             if (!url)
                 return;
             bus.get("router").navigate(url, { trigger: false });
+        },
+
+        slideConstructor: function() {
+            return this._slideContentView.constructor;
+        },
+
+        remove: function() {
+            // Push the slide view back in a list, so that we could reuse it
+            // if user just navigates around.
+            SlideView.recoverSlideView(this);
+            return this;
         }
     }, {
+        _cachedSlides: [],
+
         encapsulateSlide: function(slide) {
-            return slide ? new SlideView().setSlideContentView(slide).render() : null;
+            var slideView = this.lookupCachedSlide(slide);
+            return slideView ? slideView : (slide ? this.createSlideView(slide) : null);
+        },
+
+        createSlideView: function(slide) {
+            var slideItem = bus.get("slideManager").createSlide(slide);
+            return new SlideView().setSlideContentView(slideItem).render();
+        },
+
+        lookupCachedSlide: function(slide) {
+            var cachedSlideView = _.find(this._cachedSlides, function(slideView) {
+                return slideView.slideConstructor() === slide;
+            });
+            if (cachedSlideView) {
+                var index = _.indexOf(this._cachedSlides, cachedSlideView);
+                this._cachedSlides.splice(index, 1);
+                cachedSlideView.setVisible(true)
+                    .setOpacity(1)
+                    .transform().clear();
+            }
+            return cachedSlideView;
+        },
+
+        recoverSlideView: function(slideView) {
+            this._cachedSlides.push(slideView.setVisible(false));
         }
     });
 

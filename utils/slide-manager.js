@@ -20,23 +20,18 @@ define(["mobileui/utils/bus", "slides/list"], function(bus, SlideList) {
     }
 
     _.extend(SlideManager.prototype, {
-        createSlide: function(ViewItem, pathOptions) {
-            var view = new ViewItem({
-                path: pathOptions
-            }).render();
-            return view;
+        createSlide: function(ViewItem) {
+            return new ViewItem().render();
         },
 
-        lookupSlide: function(label, pathOptions) {
+        lookupSlide: function(label) {
             var ViewItem = _.find(SlideList, function(item) {
                 return item.label == label;
             });
-            if (!ViewItem)
-                return null;
-            return this.createSlide(ViewItem, pathOptions);
+            return ViewItem;
         },
 
-        _nextSlideConstructor: function(view) {
+        lookupNextSlide: function(view) {
             var index = _.indexOf(SlideList, view.constructor);
             return index == -1 ? SlideList[0] : SlideList[index + 1];
         },
@@ -45,23 +40,13 @@ define(["mobileui/utils/bus", "slides/list"], function(bus, SlideList) {
             return !!this._nextSlideConstructor(view);
         },
 
-        lookupNextSlide: function(view, pathOptions) {
-            var ViewItem = this._nextSlideConstructor(view);
-            return ViewItem ? this.createSlide(ViewItem, pathOptions) : null;
-        },
-
-        _previousSlideConstructor: function(view) {
+        lookupPreviousSlide: function(view) {
             var index = _.indexOf(SlideList, view.constructor);
             return index == -1 ? null : SlideList[index - 1];
         },
 
         hasPreviousSlide: function(view) {
-            return !!this._previousSlideConstructor(view);
-        },
-
-        lookupPreviousSlide: function(view, pathOptions) {
-            var ViewItem = this._previousSlideConstructor(view);
-            return ViewItem ? this.createSlide(ViewItem, pathOptions) : null;
+            return !!this.lookupPreviousSlide(view);
         }
     });
 
