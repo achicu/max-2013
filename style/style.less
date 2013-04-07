@@ -1,5 +1,14 @@
+a.js-link-view.js-button-view-down {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.js-slide-container-content-view {
+    transform-origin: 0 0;
+}
+
 .js-slide-item-view, .js-slide-list-item-view {
-    background: radial-gradient(rgb(73, 77, 78) 0%, rgba(52, 55, 55, 1) 80%, rgba(51, 54, 54, 1) 100%);
+    background: -webkit-radial-gradient(left, rgb(73, 77, 78) 0%, rgba(52, 55, 55, 1) 80%, rgba(51, 54, 54, 1) 100%);
 }
 
 .js-slide-list-button-view.js-button-view-down {
@@ -11,7 +20,13 @@
     color: white;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
     text-align: center;
-    font-size: 2.5em;
+    font-size: 2.2em;
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: "source-l";
+        margin: 0;
+        font-weight: 400;
+    }
 
     ul {
         margin: 0;
@@ -29,7 +44,7 @@
         left: 10%;
         width: 80%;
         text-align: center;
-        @include prefixProperty(transform, translateY(-50%));
+        transform: translateY(-50%);
     }
 
     .title-margin {
@@ -147,6 +162,24 @@
     }
 }
 
+.js-slide-index {
+    .white-stripe {
+        position: absolute;
+        top: 30%;
+        background-color: rgba(255, 255, 255, 0.9);
+        width: 100%;
+        text-align: center;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        font-size: 0.7em;
+        border-radius: 10px;
+        h1, h2, h3, h4, a {
+            color: black;
+            text-shadow: none;
+        }
+    }
+}
+
 .js-slide-touch-gestures {
     .touch-area {
         position: relative;
@@ -198,10 +231,10 @@
             position: absolute;
             top: 50%;
             right: 30px;
-            @include prefixProperty(transform, translateY(-50%));
+            transform: translateY(-50%);
             width: 100px;
             height: 50px;
-            @include prefixValue(background, radial-gradient(bottom, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0.5) 100%));
+            background: -webkit-radial-gradient(bottom, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0.5) 100%);
             border: 2px solid rgba(255, 255, 255, 0.4);
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             border-top-left-radius: 50px;
@@ -221,8 +254,8 @@
                 height: 4px;
                 left: -4%;
                 width: 54%;
-                @include prefixValue(background, linear-gradient(right, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.0) 59%, rgba(255, 255, 255, 0.8) 80%, rgba(255, 255, 255, 0.9) 100%));
-                @include prefixProperty(transform-origin, 100% 50%);
+                background: -webkit-linear-gradient(right, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.0) 59%, rgba(255, 255, 255, 0.8) 80%, rgba(255, 255, 255, 0.9) 100%);
+                transform-origin: 100% 50%;
             }
 
             &.val1-gauge-view {
@@ -231,7 +264,7 @@
                     content: "60fps";
                 }
                 .gauge-view-indicator {
-                    @include prefixProperty(transform, rotate(170deg));
+                    transform: rotate(170deg);
                 }
             }
 
@@ -241,7 +274,7 @@
                     content: "40fps";
                 }
                 .gauge-view-indicator {
-                    @include prefixProperty(transform, rotate(116deg));
+                    transform: rotate(116deg);
                 }
             }
 
@@ -251,7 +284,7 @@
                     content: "20fps";
                 }
                 .gauge-view-indicator {
-                    @include prefixProperty(transform, rotate(63deg));
+                    transform: rotate(63deg);
                 }
             }
 
@@ -261,7 +294,7 @@
                     content: "0fps";
                 }
                 .gauge-view-indicator {
-                    @include prefixProperty(transform, rotate(10deg));
+                    transform: rotate(10deg);
                 }
             }
         }

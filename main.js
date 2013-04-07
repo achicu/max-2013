@@ -20,12 +20,11 @@ define([
     // Router and MainView automatically inject in the bus.
     'router',
     'views/main-view',
-    'mobileui/utils/style-module!../../style/topcoat/normalize.css',
-    'mobileui/utils/style-module!../../style/topcoat/topcoat-mobile.css',
-    'mobileui/utils/style-module!../../style/mobile-ui.css',
-    'mobileui/utils/style-module!../../style/components.css',
-    'mobileui/utils/style-module!style/style.css',
-    'mobileui/utils/less-module!style/slides.less'
+    'mobileui/utils/less-module!../../style/topcoat/normalize.css?rootpath=../../style/topcoat/',
+    'mobileui/utils/less-module!../../style/topcoat/topcoat-mobile.css?rootpath=../../style/topcoat/',
+    'mobileui/utils/less-module!../../style/mobile-ui.css?rootpath=../../style/',
+    'mobileui/utils/less-module!../../style/components.css?rootpath=../../style/',
+    'mobileui/utils/less-module!style/style.less?rootpath=style/'
 ],
 
 function(bus, settings) {
