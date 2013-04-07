@@ -261,27 +261,19 @@ define(function() {
             });
         },
 
-        _fromZeroBlend: function(percent, other) {
-            var transform = new Transform();
-            _.each(other._data, function(fn, i) {
-                transform.append(fn.blend(percent, fn.type.defaultValue));
-            });
-            return transform;
-        },
-
-        _toZeroBlend: function(percent) {
+        _zeroBlend: function(percent) {
             var transform = new Transform();
             _.each(this._data, function(fn, i) {
-                transform.append(fn.blend(1 - percent, fn.type.defaultValue));
+                transform.append(fn.blend(percent, fn.type.defaultValue));
             });
             return transform;
         },
 
         blend: function(percent, other) {
             if (!this._data.length)
-                return this._fromZeroBlend(percent, other);
+                return other._zeroBlend(1 - percent);
             if (!other._data.length)
-                return this._toZeroBlend(1 - percent);
+                return this._zeroBlend(percent);
             var transform = new Transform();
             if (this.canBlendFunctionsWith(other)) {
                 _.each(this._data, function(fn, i) {

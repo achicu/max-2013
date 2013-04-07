@@ -35,7 +35,7 @@ function(LayerView, LayoutParams) {
         // Called by the navigator when this view is set active.
         _setNavigatorView: function(navigatorView) {
             if (this._navigatorView === navigatorView)
-                return;
+                return this;
             this._navigatorView = navigatorView;
             this.trigger("change:navigatorView");
             this.trigger(this._navigatorView ? "attached" : "detached");

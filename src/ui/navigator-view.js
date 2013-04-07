@@ -243,6 +243,8 @@ function(LayerView, LayoutParams, NavigatorTopBarView, NavigatorContentView) {
                     promise: null,
                     previousCard: previousActiveCard
                 };
+                if (_.last(this._historyCards) === nextCard)
+                    this._historyCards.splice(this._historyCards.length - 1, 1);
                 this._activeCard = nextCard;
                 if (previousActiveCard)
                     this._contentView.before(this._activeCard, previousActiveCard);
