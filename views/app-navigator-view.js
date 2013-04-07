@@ -151,7 +151,7 @@ define(['mobileui/ui/navigator-view',
         },
 
         _onSlideSelected: function(SlideConstructor) {
-            this.pushCard(SlideView.encapsulateSlide(new SlideConstructor().render()));
+            this.pushCard(SlideView.encapsulateSlide(SlideConstructor));
         }
 
     });
