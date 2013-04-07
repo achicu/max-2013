@@ -210,10 +210,10 @@ define(["mobileui/ui/navigator-card-view",
             nextCard.animation().start().get("slide-filter")
                 .chain()
                 .filter(300, new Filter().grayscale(100), new Filter().grayscale(0));
+            nextCard.transform().get("translate").setX(this.bounds().width());
             nextCard.animation().get("slide-transform")
                 .chain()
                 .transform(300,
-                    new Transform().translate(this.bounds().width(), 0),
                     new Transform())
                 .callback(function() {
                     nextCard.transform().clear();
