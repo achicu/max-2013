@@ -34,6 +34,7 @@ define(['mobileui/utils/underscore', 'mobileui/utils/text-module'], function (_,
         _createStyleTag: function(moduleName) {
             return $("<style />")
                 .attr("data-href", moduleName)
+                .attr("data-noprefix", "") // Prevents prefix free runs.
                 .attr("data-preloading", "")
                 .appendTo($("head"));
         },

@@ -43,9 +43,12 @@ define(['mobileui/utils/underscore', 'mobileui/utils/style-module', 'require'], 
         },
         
         encodeContentAsync: function(content, moduleName, parsedName, callback) {
-            var self = this;
+            var self = this,
+                options = _.extend({
+                    rootpath: '' 
+                }, parsedName.options);
             this.loadLess(function(less) {
-                var parser = new less.Parser(this._env);
+                var parser = new less.Parser(_.extend({}, this._env, options));
                 parser.parse(content, function (err, css) {
                     if (err) {
                         console.error(err);
