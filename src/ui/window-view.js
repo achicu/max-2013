@@ -26,6 +26,11 @@ define(["mobileui/views/layout-view"], function(LayoutView) {
             // Make sure we eat all the events before reaching the browser,
             // to prevent any default scrolling behavior.
             this.setNeedsTouchEvents(true);
+
+            var eventRelay = this._sendEventRecursive.bind(this);
+            $(window).on("keydown", eventRelay);
+            $(window).on("keyup", eventRelay);
+            $(window).on("keypress", eventRelay);
         },
 
         render: function() {

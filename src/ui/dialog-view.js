@@ -48,6 +48,8 @@ define(['mobileui/views/layout-view',
             this._canShow = true;
             this._canHide = true;
             this._isActive = false;
+
+            this.on("keydown", this._onKeyDown, this);
         },
 
         isActive: function() {
@@ -168,6 +170,13 @@ define(['mobileui/views/layout-view',
 
         _onBackgroundTap: function() {
             this.hide();
+        },
+
+        _onKeyDown: function() {
+            switch (event.keyCode) {
+                case 27: // escape
+                    return this.hide();
+            }
         }
     });
 

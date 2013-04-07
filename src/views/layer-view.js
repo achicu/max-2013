@@ -75,6 +75,24 @@ define(["mobileui/utils/rect",
             return this;
         },
 
+        _triggerEvent: function(event, capture) {
+            this.trigger(event.type + (capture ? ":capture" : ""), event);
+        },
+
+        _sendEventRecursive: function(event) {
+            if (this._disabled || !this._visible)
+                return;
+            this._triggerEvent(event, true);
+            if (event.cancelBubble)
+                return;
+            _.each(this.childrenViews(), function(view) {
+                if (!event.cancelBubble)
+                    view._sendEventRecursive(event);
+            });
+            if (!event.cancelBubble)
+                this._triggerEvent(event, false);
+        },
+
         isStaticView: function() {
             return this._isStaticView;
         },
