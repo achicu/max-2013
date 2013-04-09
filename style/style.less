@@ -185,6 +185,66 @@ a.js-link-view.js-button-view-down {
     }
 }
 
+.js-slide-about-me {
+    .css-regions-picture, .css-exclusions-picture, .css-filters-picture, .css-webkit-picture {
+        position: absolute;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        & > a { 
+            display: block;
+            width: 100%;
+            height: 100%;
+
+            & > .feature-label {
+                position: absolute;
+                top: -1.5em;
+                left: 0px;
+                text-align: center;
+                width: 100%
+            }
+        }
+    }
+
+    .css-regions-picture, .css-exclusions-picture, .css-filters-picture {
+        box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.6);
+        background-color: white;
+        width: 30%;
+        height: 30%;
+    }
+
+    .css-regions-picture {
+        left: 10%;
+        top: 25%;
+        background-image: url(../images/specs/regions.png);
+        transform: rotate(-10deg);
+    }
+
+    .css-exclusions-picture {
+        left: 35%;
+        top: 25%;
+        background-image: url(../images/specs/exclusions.png);
+    }
+
+    .css-filters-picture {
+        left: 60%;
+        top: 35%;
+        background-image: url(../images/specs/filters.png);
+        transform: rotate(6deg);
+    }
+
+    .css-webkit-picture {
+        left: 20%;
+        top: 50%;
+        width: 40%;
+        height: 40%;
+        background-image: url(../images/webkit-icon.png);
+
+        .feature-label { display: none; }
+    }
+}
+
 .js-slide-touch-gestures {
     .touch-area {
         position: relative;
