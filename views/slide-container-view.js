@@ -15,13 +15,14 @@
  */
 
 define(["mobileui/views/layer-view",
+        "mobileui/views/content-view",
         "mobileui/utils/view-injector",
         "mobileui/utils/rect",
         "mobileui/utils/bus",
         // Add all the dynamic components in here, so that the r.js optimizer
         // preloads them in the generated output.
         "mobileui/ui/link-view"],
-    function(LayerView, ViewInjector, Rect, bus) {
+    function(LayerView, ContentView, ViewInjector, Rect, bus) {
 
     var defaultSlideRect = new Rect().setSize(1024, 768);
 
@@ -34,17 +35,25 @@ define(["mobileui/views/layer-view",
 
             this._contentView = new LayerView()
                 .addClass("js-slide-container-content-view");
-            if (this.constructor.label)
+            if (this.constructor.label) {
+                this.addClass("js-slide-container-" + this.constructor.label);
                 this._contentView.addClass("js-slide-" + this.constructor.label);
+            }
             this._contentView.bounds().set(this._slideBounds);
             this.append(this._contentView.render());
-            
+
             var self = this;
             this._contentView.$el.html(this._template);
             var viewInjector = new ViewInjector();
             viewInjector.convert(this, this._contentView).then(function() {
                 self.trigger("views:injected");
             });
+
+            this._slideNumber = new ContentView()
+                .setIsStaticView(true)
+                .setTextContent(this.constructor.index + 1)
+                .addClass("js-slide-number");
+            this._contentView.append(this._slideNumber.render());
         },
 
         _onSlideBoundsChanged: function() {

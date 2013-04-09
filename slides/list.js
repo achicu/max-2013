@@ -29,5 +29,9 @@ define(["utils/slide-module!slides/index.html?label=index",
         "utils/slide-module!slides/web-workers.html?label=web-workers",
         "utils/slide-module!slides/end.html?label=end"
        ], function() {
-    return _.toArray(arguments);
+    var list = _.toArray(arguments);
+    _.each(list, function(View, i) {
+        View.index = i;
+    });
+    return list;
 });
