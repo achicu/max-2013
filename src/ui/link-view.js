@@ -29,7 +29,7 @@ define(["mobileui/ui/button-view"], function(ButtonView) {
         },
 
         _onLinkTap: function() {
-            console.log(this.$el.attr("href"));
+            window.open(this.$el.attr("href"));
         }
     });
 

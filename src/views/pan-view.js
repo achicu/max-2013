@@ -56,6 +56,7 @@ define(["mobileui/views/gesture-view",
         },
 
         _onPanViewTouchDragStart: function() {
+            this.animation().removeAll();
             this._startTransform = this.transform().toMatrix3d();
         },
 
