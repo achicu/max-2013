@@ -50,6 +50,7 @@ define(["mobileui/ui/app-card-view",
             this._contentView = new SlideItemView().setListView(this);
             this.append(this._contentView.render());
 
+            this.on("ready", this._onSlideViewReady, this);
             this.on("deactivate", this._onDeactivate, this);
             this.on("tap", this._onTap, this);
             this.on("keydown", this._onKeyDown, this);
@@ -72,6 +73,13 @@ define(["mobileui/ui/app-card-view",
 
         slideContentView: function() {
             return this._slideContentView;
+        },
+
+        _onSlideViewReady: function() {
+            // Make sure we have slides on the left and right ready for next frame.
+            // Trigger the cache system to create the following view.
+            if (this.hasNextCard())
+                SlideView.precache(this.nextSlide());
         },
 
         _onDeactivate: function() {
@@ -143,6 +151,11 @@ define(["mobileui/ui/app-card-view",
             return this._slideContentView.constructor;
         },
 
+        detach: function() {
+            SlideView.recoverSlideView(this);
+            return this;
+        },
+
         remove: function() {
             // Push the slide view back in a list, so that we could reuse it
             // if user just navigates around.
@@ -165,10 +178,20 @@ define(["mobileui/ui/app-card-view",
         }
     }, {
         _cachedSlides: [],
+        _maxCachedSlides: 4,
 
         encapsulateSlide: function(slide) {
             var slideView = this.lookupCachedSlide(slide);
             return slideView ? slideView : (slide ? this.createSlideView(slide) : null);
+        },
+
+        precache: function(slide) {
+            var cachedSlideView = _.find(this._cachedSlides, function(slideView) {
+                return slideView.slideConstructor() === slide;
+            });
+            if (cachedSlideView)
+                return cachedSlideView;
+            this.recoverSlideView(this.createSlideView(slide));
         },
 
         createSlideView: function(slide) {
@@ -191,7 +214,15 @@ define(["mobileui/ui/app-card-view",
         },
 
         recoverSlideView: function(slideView) {
-            this._cachedSlides.push(slideView.setVisible(false));
+            var index = _.indexOf(this._cachedSlides, slideView);
+            if (index != -1)
+                return;
+            this._cachedSlides.unshift(slideView.setVisible(false));
+            if (this._cachedSlides.length > this._maxCachedSlides) {
+                for (var i = this._maxCachedSlides; i < this._cachedSlides.length; ++i)
+                    SlideView.__super__.remove.call(this._cachedSlides[i]);
+                this._cachedSlides.splice(this._maxCachedSlides, this._cachedSlides.length - this._maxCachedSlides);
+            }
         }
     });
 
