@@ -204,7 +204,7 @@ define(["mobileui/ui/navigator-card-view",
                     nextCard.filter().clear();
                     lock.endTransition(self);
                 });
-            this.animation().get("slide")
+            this.animation().get("slide-opacity")
                 .chain()
                 .opacity(300, 0);
             nextCard.animation().start().get("slide-filter")
@@ -218,9 +218,10 @@ define(["mobileui/ui/navigator-card-view",
                 .callback(function() {
                     nextCard.transform().clear();
                 });
-            this._grayscaleOverlay.animation().start().get("slide-opacity")
+            this._grayscaleOverlay.setOpacity(0)
+                .animation().start().get("slide-opacity")
                 .chain()
-                .opacity(300, this._backgroundViewOpacity, 0);
+                .opacity(300, this._backgroundViewOpacity);
 
             options.promise = this.animation().promise();
         },
