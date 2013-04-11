@@ -17,6 +17,8 @@
 define(function() {
 
     var LayoutParams = function() {
+        this._x = null;
+        this._y = null;
         this._width = null;
         this._height = null;
         this._weight = 1;
@@ -131,13 +133,40 @@ define(function() {
         matchLineHeight: function(matchLineHeight) {
             this._matchLineHeight = matchLineHeight;
             return this;
+        },
+
+        x: function() {
+            return this._x;
+        },
+
+        y: function() {
+            return this._y;
+        },
+
+        setX: function(x) {
+            this._x = x;
+            return this;
+        },
+
+        setY: function(y) {
+            this._y = y;
+            return this;
+        },
+
+        horizontalCenter: function() {
+            return this.setX(LayoutParams.CENTER);
+        },
+
+        verticalCenter: function() {
+            return this.setY(LayoutParams.CENTER);
         }
     });
 
     _.extend(LayoutParams, {
         FILL_PARENT: "fill-parent",
         MATCH_PARENT: "match-parent",
-        MATCH_CHILDREN: "match-children"
+        MATCH_CHILDREN: "match-children",
+        CENTER: "center"
     });
 
     return LayoutParams;

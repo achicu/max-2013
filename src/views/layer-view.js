@@ -432,6 +432,12 @@ define(["mobileui/utils/rect",
             // Equivalent of "matchHeightOf".
             else if (_.isObject(params.height()))
                 this.setOuterHeight(params.height().bounds().height());
+
+            if (params.x() == LayoutParams.CENTER)
+                this.bounds().setX((parentView.bounds().width() - this.bounds().width()) / 2);
+
+            if (params.y() == LayoutParams.CENTER)
+                this.bounds().setY((parentView.bounds().height() - this.bounds().height()) / 2);
         },
 
         setOuterWidth: function(width) {

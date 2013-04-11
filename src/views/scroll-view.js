@@ -94,6 +94,13 @@ function(GestureView, LayerView, GestureDetector, boilerplate, Momentum,
             return this;
         },
 
+        _readSnapToChildrenBoundsAttribute: function() {
+            var snapToChildrenBoundsAttribute = this.$el.attr("data-snap");
+            if (snapToChildrenBoundsAttribute === undefined)
+                return;
+            this.setSnapToChildrenBounds();
+        },
+
         _readScrollDirectionAttribute: function() {
             var scrollDirectionAttribute = this.$el.attr("data-scroll-direction");
             if (!scrollDirectionAttribute)
@@ -103,6 +110,7 @@ function(GestureView, LayerView, GestureDetector, boilerplate, Momentum,
 
         readViewAttributes: function() {
             ScrollView.__super__.readViewAttributes.call(this);
+            this._readSnapToChildrenBoundsAttribute();
             this._readScrollDirectionAttribute();
         },
 
