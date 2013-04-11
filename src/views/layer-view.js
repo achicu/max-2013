@@ -708,9 +708,17 @@ define(["mobileui/utils/rect",
                 .setHeight(boundsAttributes[3]);
         },
 
+        _readStaticAttribute: function() {
+            var staticAttribute = this.$el.attr("data-static-view");
+            if (staticAttribute === undefined)
+                return;
+            this.setIsStaticView(true);
+        },
+
         readViewAttributes: function() {
             this._readParamsAttribute();
             this._readBoundsAttribute();
+            this._readStaticAttribute();
         }
     });
 
