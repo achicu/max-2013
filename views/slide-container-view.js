@@ -21,7 +21,11 @@ define(["mobileui/views/layer-view",
         "mobileui/utils/bus",
         // Add all the dynamic components in here, so that the r.js optimizer
         // preloads them in the generated output.
-        "mobileui/ui/link-view"],
+        "mobileui/ui/link-view",
+        "views/demo-view",
+        "views/touch-hold-view",
+        "mobileui/views/pan-view",
+        "mobileui/views/transform-view"],
     function(LayerView, ContentView, ViewInjector, Rect, bus) {
 
     var defaultSlideRect = new Rect().setSize(1024, 768);
