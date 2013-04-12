@@ -217,7 +217,7 @@ define(["mobileui/ui/app-card-view",
             var index = _.indexOf(this._cachedSlides, slideView);
             if (index != -1)
                 return;
-            this._cachedSlides.unshift(slideView.setVisible(false));
+            this._cachedSlides.unshift(slideView.setOpacity(0).setVisible(false));
             if (this._cachedSlides.length > this._maxCachedSlides) {
                 for (var i = this._maxCachedSlides; i < this._cachedSlides.length; ++i)
                     SlideView.__super__.remove.call(this._cachedSlides[i]);

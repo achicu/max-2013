@@ -1,5 +1,7 @@
 CACHE MANIFEST
 
+# Version 1
+
 dist/all.min.js
 ../../style/font/SourceSansPro/SourceSansPro-Regular.otf
 ../../style/font/SourceSansPro/SourceSansPro-Light.otf
@@ -17,3 +19,4 @@ images/performance.svg
 images/offline.svg
 images/phone_ui.svg
 images/adobe.png
+
