@@ -17,7 +17,8 @@
 define(["mobileui/utils/time",
         "mobileui/utils/request-animation-frame"], function(Time, requestAnimationFrame) {
 
-    var frameRateInterval = 1000 / 60;
+    var frameRateInterval = 1000 / 60,
+        maxRequestAnimationFrameDuration = frameRateInterval * 1.5;
 
     var AnimationState = function() {
         this.time = -1;
@@ -127,7 +128,7 @@ define(["mobileui/utils/time",
         },
 
         _setTimer: function(interval) {
-            if (this._nextTimerInterval != -1 && 
+            if (this._nextTimerInterval != -1 &&
                 this._nextTimerInterval <= interval)
                 return;
             // Remove any old timer and update it to throw in that amount.
@@ -136,10 +137,14 @@ define(["mobileui/utils/time",
                 this._nextTimerId = null;
                 this._nextTimerInterval = -1;
             }
-            if (interval == -1)
-                return;
             this._nextTimerInterval = interval;
-            this._nextTimerId = setTimeout(this._timerCallbak, interval);
+            if (interval == -1 || this._pendingCommit)
+                return;
+            if (interval <= maxRequestAnimationFrameDuration) {
+                this._injectRequestAnimationFrameCallback();
+            } else {
+                this._nextTimerId = setTimeout(this._timerCallbak, interval);
+            }
         },
 
         _onTimerFired: function() {
@@ -183,11 +188,26 @@ define(["mobileui/utils/time",
             this._inCompute = false;
         },
 
-        runOnRequestAnimationFrame: function() {
+        _computeOnAnimationFrame: function() {
+            this._nextTimerInterval = -1;
+            if (this._nextTimerId) {
+                clearTimeout(this._nextTimerId);
+                this._nextTimerId = null;
+            }
+            this.compute();
+        },
+
+        _injectRequestAnimationFrameCallback: function() {
             if (this._pendingCommit)
                 return;
             this._pendingCommit = true;
-            requestAnimationFrame.once("animation", this.compute, this).run();
+            requestAnimationFrame.once("animation", this._computeOnAnimationFrame, this).run();
+        },
+
+        runOnRequestAnimationFrame: function() {
+            if (this._pendingCommit)
+                return;
+            this._injectRequestAnimationFrameCallback();
             this._setTimer(-1);
         }
     });

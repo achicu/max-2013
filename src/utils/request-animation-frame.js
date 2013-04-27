@@ -25,17 +25,25 @@ define(["mobileui/utils/boilerplate"], function(boilerplate) {
 
     var requestedCallbacks = null;
     var hadDOMUpdates = false;
+    var waitingNewLoop = false;
+
+    function requestUpdate() {
+        if (waitingNewLoop)
+            return;
+        waitingNewLoop = true;
+        requestAnimationFrame(update);
+    }
 
     var fn = _.extend(function(callback) {
         if (!requestedCallbacks) {
             requestedCallbacks = [];
-            requestAnimationFrame(update);
+            requestUpdate();
         }
         if (callback)
             requestedCallbacks.push(callback);
     }, Backbone.Events, {
         run: function() {
-            fn(null);
+            requestUpdate();
         },
         setHadDOMUpdates: function() {
             hadDOMUpdates = true;
@@ -47,6 +55,7 @@ define(["mobileui/utils/boilerplate"], function(boilerplate) {
     });
 
     function update() {
+        waitingNewLoop = false;
         fn.trigger("layout");
         fn.trigger("animation");
         while (requestedCallbacks && requestedCallbacks.length) {
