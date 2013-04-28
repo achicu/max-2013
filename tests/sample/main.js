@@ -18,7 +18,13 @@ define([
     'sample/app',
     'mobileui/utils/settings',
     'sample/router',
-    'sample/views/main-view'
+    'sample/views/main-view',
+    // Added to the HTML file.
+    'mobileui/utils/less-module!../../style/topcoat/normalize.css?rootpath=../../style/topcoat/',
+    'mobileui/utils/less-module!../../style/topcoat/topcoat-mobile.css?rootpath=../../style/topcoat/',
+    'mobileui/utils/less-module!../../style/mobile-ui.css?rootpath=../../style/',
+    'mobileui/utils/less-module!../../style/components.css?rootpath=../../style/',
+    'mobileui/utils/less-module!style/style.css?rootpath=style/'
 ],
 
 function(app, settings) {
