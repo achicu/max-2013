@@ -1,0 +1,14 @@
+{
+    "baseUrl": ".",
+    "paths": {
+        "mobileui": "../../src/",
+        "third-party": "../../third-party/dev/"
+    },
+    "stubModules": [
+        "third-party/underscore",
+        "mobileui/utils/less-module"
+    ],
+    "name": "main",
+    "out": "dist/main.min.js",
+    "optimize": "none"
+}

@@ -1,0 +1,458 @@
+a.js-link-view.js-button-view-down {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.js-slide-container-content-view {
+    transform-origin: 0 0;
+}
+
+.js-slide-item-view, .js-slide-list-item-view {
+    background: -webkit-radial-gradient(left, rgb(73, 77, 78) 0%, rgba(52, 55, 55, 1) 80%, rgba(51, 54, 54, 1) 100%);
+}
+
+.js-slide-list-button-view.js-button-view-down {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+.js-logo-view {
+    background: url(../images/adobe.svg) center top no-repeat;
+    background-size: contain;
+}
+
+.js-slide-container-content-view {
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    font-size: 2.2em;
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: "source-l";
+        margin: 0;
+        font-weight: 400;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        & > li{
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .js-slide-number {
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-weight: bold;
+        font-size: 0.5em;
+        bottom: 2%;
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        width: 80%;
+        text-align: center;
+        transform: translateY(-50%);
+    }
+
+    .title-margin {
+        margin-top: 1em;
+    }
+
+    .italics {
+        font-style: italic;
+    }
+
+    .link-view {
+        display: block;
+    }
+
+    .slide-link {
+        position: absolute;
+        bottom: 10%;
+        left: 0px;
+        right: 0px;
+        font-size: 0.6em;
+    }
+
+    h1, h2, h3, h4, h5, h6,
+    a, a:visited {
+        color: white;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+        text-decoration: none;
+    }
+
+    .smaller-space {
+        margin-left: auto;
+        margin-right: auto;
+        width: 60%;
+    }
+
+    .bordered-list {
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 10px;
+        margin-top: 1em;
+        margin-bottom: 1em;
+
+        li {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            & + li {
+                border-top: 1px solid rgba(255, 255, 255, 0.4);
+            }
+            &:nth-child(2n+1) {
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            &.small, .small {
+                font-size: 0.8em;
+            }
+
+            &.title {
+                background: rgba(0, 0, 0, 0.3);
+            }
+
+            &:first-of-type {
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+        }
+    }
+
+    .simple-list {
+        margin-top: 1em;
+        margin-bottom: 1em;
+
+        li {
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+            &.small {
+                font-size: 0.6em;
+            }
+
+            .small {
+                font-size: 0.8em;
+            }
+        }
+    }
+
+    .row {
+        width: 100%;
+        .cell3 {
+            float: left;
+            width: 31%;
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+        .cell2 {
+            float: left;
+            width: 48%;
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+        .cell2-reduced {
+            float: left;
+            width: 29%;
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+        .cell2-reduced:first-of-type {
+            margin-left: 20%;
+        }
+        .cell2-reduced:last-of-type {
+            margin-right: 20%;
+        }
+        &::after {
+            content: "";
+            clear: left;
+        }
+    }
+}
+
+.js-slide-container-index {
+    background: url(../images/background.jpg) no-repeat center;
+    background-size: cover;
+}
+
+.js-slide-index {
+    .text-band {
+        position: absolute;
+        top: 15%;
+        left: 0px;
+        right: 0px;
+        background: rgba(255, 255, 255, 0.8);
+        color: black;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.8em;
+        border-radius: 10px;
+
+        h1 {
+            color: black;
+            text-shadow: none;
+        }
+
+        h2, h3, h4 {
+            color: #888888;
+            text-shadow: none;
+        }
+
+        a {
+            color: #555555;
+            text-shadow: none;
+        }
+    }
+
+    .adobe-bird {
+        position: absolute;
+        background: url(../images/adobe_bird.png) no-repeat right bottom;
+        background-size: contain;
+        width: 30%;
+        height: 30%;
+        right: -5%;
+        bottom: 10%;
+    }
+
+    .adobe-max {
+        position: absolute;
+        background: url(../images/adobe_max.png) no-repeat center bottom;
+        background-size: contain;
+        height: 30%;
+        left: 5%;
+        right: 5%;
+        top: 40%;
+    }
+
+    .js-slide-number {
+        display: none;
+    }
+}
+
+.js-slide-about-me {
+    .css-regions-picture, .css-exclusions-picture, .css-filters-picture, .css-webkit-picture {
+        position: absolute;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        & > a { 
+            display: block;
+            width: 100%;
+            height: 100%;
+
+            & > .feature-label {
+                position: absolute;
+                top: -1.5em;
+                left: 0px;
+                text-align: center;
+                width: 100%
+            }
+        }
+    }
+
+    .css-regions-picture, .css-exclusions-picture, .css-filters-picture {
+        box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.6);
+        background-color: white;
+        width: 30%;
+        height: 30%;
+    }
+
+    .css-regions-picture {
+        left: 10%;
+        top: 25%;
+        background-image: url(../images/specs/regions.png);
+        transform: rotate(-10deg);
+    }
+
+    .css-exclusions-picture {
+        left: 35%;
+        top: 25%;
+        background-image: url(../images/specs/exclusions.png);
+    }
+
+    .css-filters-picture {
+        left: 60%;
+        top: 35%;
+        background-image: url(../images/specs/filters.png);
+        transform: rotate(6deg);
+    }
+
+    .css-webkit-picture {
+        left: 20%;
+        top: 50%;
+        width: 40%;
+        height: 40%;
+        background-image: url(../images/webkit-icon.png);
+
+        .feature-label { display: none; }
+    }
+}
+
+.js-slide-intro {
+    .intro-scroll-view {
+        width: 1024px;
+        height: 200px;
+        text-align: center;
+        font-size: 2em;
+    }
+}
+
+.js-slide-demos {
+    .js-demo-view {
+        background-color: rgba(0, 0, 0, 0.8);
+        -webkit-box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.5);
+        font-size: 1rem;
+        text-shadow: none;
+        color: black;
+
+        h1, h2, h3, h4, h5, h6,
+        a, a:visited {
+            color: black;
+            text-shadow: none;
+        }
+    }
+}
+
+.js-slide-web-features {
+    .title-margin {
+        margin-bottom: 1em;
+    }
+}
+
+.js-slide-touch-gestures {
+    .touch-area {
+        position: relative;
+        height: 400px;
+        margin-top: 1em;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.1);
+
+        .touch-area-label {
+            font-size: 0.7em;
+        }
+    }
+    .js-touch-hold-view-down {
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+}
+
+.js-slide-touch-combined {
+
+    .touch-area-container {
+        margin-top: 1em;
+        position: relative;
+        height: 400px;
+
+        .touch-area-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+
+            .touch-area {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                border-radius: 10px;
+                background-color: rgba(255, 255, 255, 0.1);
+
+                .touch-area-label {
+                    font-size: 0.7em;
+                }
+            }
+        }
+    }
+}
+
+.js-slide-dom-remove {
+     .gauge-view-container {
+        position: relative;
+
+        .gauge-view {
+            position: absolute;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            width: 100px;
+            height: 50px;
+            background: -webkit-radial-gradient(bottom, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0.5) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+
+            &::after {
+                position: absolute;
+                top: 20%;
+                left: 0px;
+                right: 0px;
+                text-align: center;
+            }
+
+            .gauge-view-indicator {
+                position: absolute;
+                bottom: 0px;
+                height: 4px;
+                left: -4%;
+                width: 54%;
+                background: -webkit-linear-gradient(right, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.0) 59%, rgba(255, 255, 255, 0.8) 80%, rgba(255, 255, 255, 0.9) 100%);
+                transform-origin: 100% 50%;
+            }
+
+            &.val1-gauge-view {
+                background-color: rgba(128, 0, 0, 0.5);
+                &::after {
+                    content: "60fps";
+                }
+                .gauge-view-indicator {
+                    transform: rotate(170deg);
+                }
+            }
+
+            &.val2-gauge-view {
+                background-color: rgba(128, 0, 0, 0.4);
+                &::after {
+                    content: "40fps";
+                }
+                .gauge-view-indicator {
+                    transform: rotate(116deg);
+                }
+            }
+
+            &.val3-gauge-view {
+                background-color: rgba(128, 0, 0, 0.1);
+                &::after {
+                    content: "20fps";
+                }
+                .gauge-view-indicator {
+                    transform: rotate(63deg);
+                }
+            }
+
+            &.val4-gauge-view {
+                background-color: rgba(128, 0, 0, 0.0);
+                &::after {
+                    content: "0fps";
+                }
+                .gauge-view-indicator {
+                    transform: rotate(10deg);
+                }
+            }
+        }
+    }
+}
+
+.js-slide-end {
+    .js-slide-number {
+        display: none;
+    }
+}
