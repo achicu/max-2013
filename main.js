@@ -24,7 +24,8 @@ define([
     'mobileui/utils/less-module!../../style/topcoat/topcoat-mobile.css?rootpath=../../style/topcoat/',
     'mobileui/utils/less-module!../../style/mobile-ui.css?rootpath=../../style/',
     'mobileui/utils/less-module!../../style/components.css?rootpath=../../style/',
-    'mobileui/utils/less-module!style/style.less?rootpath=style/'
+    'mobileui/utils/less-module!style/style.less?rootpath=style/',
+    'mobileui/utils/less-module!../sample/style/style.css?rootpath=../sample/style/'
 ],
 
 function(bus, settings) {

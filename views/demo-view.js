@@ -15,14 +15,18 @@
  */
 
 define(["mobileui/views/layer-view",
-        "sample/views/main-view"], function(LayerView, MainView) {
+        "sample/app",
+        "sample/router",
+        "sample/views/main-view"], function(LayerView, sampleApp, sampleRouter, MainView) {
 
     var DemoView = LayerView.extend({
         initialize: function() {
             DemoView.__super__.initialize.call(this);
             this.addClass("js-demo-view");
-            this._mainView = new MainView().matchParentSize();
+            sampleApp.noUrlChanges = true;
+            sampleApp.mainView = this._mainView = new MainView().matchParentSize();
             this.append(this._mainView.render());
+            sampleRouter.defaultHandler();
         }
     });
 
