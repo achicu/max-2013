@@ -85,7 +85,7 @@ define(['mobileui/utils/bus',
                 .render()
                 .once("hide", this._onUpdateConfirmViewHidden, this)
                 .once("accept", this._onUpdateConfirmViewAccepted, this)
-                .show();
+                .show(this);
         },
 
         _onUpdateConfirmViewHidden: function() {
@@ -119,7 +119,7 @@ define(['mobileui/utils/bus',
                 .render()
                 .once("hide", this._onExitConfirmViewHidden, this)
                 .once("accept", this._onExitConfirmViewAccepted, this)
-                .show();
+                .show(this);
         },
 
         _onExitConfirmViewHidden: function() {

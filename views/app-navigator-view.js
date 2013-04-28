@@ -130,7 +130,7 @@ define(['mobileui/ui/navigator-view',
             this._settingsView = new AppSettingsDialogView()
                 .once("hide", this._onSettingsViewHidden, this)
                 .render()
-                .show();
+                .show(this);
         },
 
         _onSettingsViewHidden: function() {
@@ -146,7 +146,7 @@ define(['mobileui/ui/navigator-view',
                     .on("slide:selected", this._onSlideSelected, this)
                     .render();
             }
-            this._slidesView.show();
+            this._slidesView.show(this);
         },
 
         _onSlideSelected: function(SlideConstructor) {

@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-define(["mobileui/views/layer-view"], function(LayerView) {
+define(["mobileui/views/layer-view",
+        "sample/views/main-view"], function(LayerView, MainView) {
 
     var DemoView = LayerView.extend({
         initialize: function() {
             DemoView.__super__.initialize.call(this);
             this.addClass("js-demo-view");
+            this._mainView = new MainView().matchParentSize();
+            this.append(this._mainView.render());
         }
     });
 

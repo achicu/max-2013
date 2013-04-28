@@ -1,5 +1,6 @@
 requirejs.config({
     paths: {
+        "sample": "../sample",
         "mobileui": "../../src",
         "third-party": "../../third-party/dev/"
     },
