@@ -42,7 +42,7 @@ define(["mobileui/views/touch-manager",
         this.didStartTransform = false;
         this.canTap = true;
         this.longTapDuration = 500;
-        this.minDragLength = 10;
+        this.minDragLength = 3;
         this.longTapTimer = null;
         this.longTapTimerCallback = this.onLongTapTimer.bind(this);
         this.longTapTouch = null;
