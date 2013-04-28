@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-define(['app',
+define(['sample/app',
         'mobileui/views/layer-view',
         'mobileui/ui/window-view',
         'mobileui/views/touch',
         'mobileui/utils/filter',
-        'views/app-navigator-view',
+        'sample/views/app-navigator-view',
         'mobileui/ui/confirm-dialog-view',
         'mobileui/utils/cache',
         'mobileui/utils/filters/fold',

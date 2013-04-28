@@ -15,12 +15,12 @@
  */
 
 define([
-    "cards/splash-view",
-    "cards/city-view",
-    "cards/mood-view",
-    "cards/locations-view",
-    "cards/location-view",
-    "cards/picture-view"
+    "sample/cards/splash-view",
+    "sample/cards/city-view",
+    "sample/cards/mood-view",
+    "sample/cards/locations-view",
+    "sample/cards/location-view",
+    "sample/cards/picture-view"
     ],
 function() {
     return _.toArray(arguments);

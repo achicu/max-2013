@@ -18,9 +18,9 @@ define(["mobileui/ui/app-card-view",
         "mobileui/ui/list-view",
         "mobileui/views/layout-params",
         "mobileui/views/measured-view",
-        "cards/list",
-        "tests/list",
-        "app"],
+        "sample/cards/list",
+        "sample/tests/list",
+        "sample/app"],
     function(AppCardView, ListView, LayoutParams,
         MeasuredView, CardsList, TestsList, app) {
 

@@ -17,7 +17,7 @@
 define(["mobileui/ui/app-card-view",
         "mobileui/views/layer-view",
         "mobileui/utils/transform",
-        "views/url-card-view-mixin",
+        "sample/views/url-card-view-mixin",
         "mobileui/utils/lock"],
     function(AppCardView, LayerView, Transform, UrlCardViewMixin, lock) {
 

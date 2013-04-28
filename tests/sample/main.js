@@ -15,10 +15,10 @@
  */
 
 define([
-    'app',
+    'sample/app',
     'mobileui/utils/settings',
-    'router',
-    'views/main-view'
+    'sample/router',
+    'sample/views/main-view'
 ],
 
 function(app, settings) {

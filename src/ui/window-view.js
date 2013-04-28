@@ -19,6 +19,10 @@ define(["mobileui/views/layout-view"], function(LayoutView) {
     var WindowView = LayoutView.extend({
         initialize: function() {
             WindowView.__super__.initialize.call(this);
+            if (WindowView.instance) {
+                // Support nested WindowViews.
+                return;
+            }
             // Keep a reference to the main view so that DialogView can attach itself to the window.
             WindowView.instance = this;
             $(window).on("resize", this._onWindowResize.bind(this));
@@ -26,7 +30,6 @@ define(["mobileui/views/layout-view"], function(LayoutView) {
             // Make sure we eat all the events before reaching the browser,
             // to prevent any default scrolling behavior.
             this.setNeedsTouchEvents(true);
-
             var eventRelay = this._sendEventRecursive.bind(this);
             $(window).on("keydown", eventRelay);
             $(window).on("keyup", eventRelay);
@@ -48,6 +51,16 @@ define(["mobileui/views/layout-view"], function(LayoutView) {
             this.bounds()
                 .setSize(window.innerWidth, window.innerHeight);
             this.setNeedsLayout(true);
+        }
+    }, {
+        fromLayer: function(layer) {
+            var windowLayer = layer;
+            console.log(layer);
+            for (; windowLayer; windowLayer = windowLayer.parent()) {
+                if (windowLayer instanceof WindowView)
+                    return windowLayer;
+            }
+            return null;
         }
     });
 

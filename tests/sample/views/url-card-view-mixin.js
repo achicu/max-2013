@@ -1,4 +1,4 @@
-define(["app"],
+define(["sample/app"],
     function(app) {
 
     var UrlCardViewMixin = {

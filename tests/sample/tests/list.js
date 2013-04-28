@@ -15,7 +15,7 @@
  */
 
 define([
-    "tests/old-test"
+    "sample/tests/old-test"
     ],
 function() {
     return _.toArray(arguments);

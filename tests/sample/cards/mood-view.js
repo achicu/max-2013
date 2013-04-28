@@ -16,8 +16,8 @@
 
 define(["mobileui/ui/touch-item-view",
         "mobileui/ui/touch-list-view",
-        "views/url-card-view-mixin",
-        "app"],
+        "sample/views/url-card-view-mixin",
+        "sample/app"],
     function(TouchItemView,
             TouchListView,
             UrlCardViewMixin,

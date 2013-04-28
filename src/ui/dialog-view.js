@@ -140,7 +140,7 @@ define(['mobileui/views/layout-view',
             this.trigger("hide");
         },
 
-        show: function() {
+        show: function(container) {
             if (this._isActive)
                 return;
             this._isActive = true;
@@ -150,9 +150,10 @@ define(['mobileui/views/layout-view',
             }
             activeDialogView = this;
             this.setVisible(true);
-            if (this.parent() !== WindowView.instance)
-                WindowView.instance.append(this);
-            this._attachedView = WindowView.instance.contentView();
+            var parentWindow = WindowView.fromLayer(container);
+            if (this.parent() !== parentWindow)
+                parentWindow.append(this);
+            this._attachedView = parentWindow.contentView();
             if (this._attachedView)
                 this._attachedView.setDisabled(true);
             this.trigger("show");

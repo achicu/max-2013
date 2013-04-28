@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-define(["app", "views/index-view", "cards/list", "tests/list"],
+define(["sample/app", "sample/views/index-view", "sample/cards/list", "sample/tests/list"],
     function(app, IndexView, CardsList, TestsList) {
 
     var Router = Backbone.Router.extend({
