@@ -63,6 +63,8 @@ define(['mobileui/utils/boilerplate', 'mobileui/utils/default-settings'],
         _settings: _.extend({}, defaultSettings),
 
         _readStoredValues: function() {
+            if (!localStorage)
+                return;
             var storedSettings = localStorage.getItem(storageKeyName);
             if (!storedSettings)
                 return;
