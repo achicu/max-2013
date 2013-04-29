@@ -22,6 +22,7 @@ define([
         initializeTouchViewMixin: function() {
             this.touchEvents = {
                 installed: false,
+                onPointerDown: this.onPointerDown.bind(this),
                 onTouchStart: this.onTouchStart.bind(this),
                 onMouseDown: this.onMouseDown.bind(this),
                 onClick: this.onClick.bind(this)
@@ -35,6 +36,7 @@ define([
             if (this.touchEvents.installed)
                 return;
             var el = this.$el.get(0);
+            el.addEventListener("MSPointerDown", this.touchEvents.onPointerDown, false);
             el.addEventListener("touchstart", this.touchEvents.onTouchStart, false);
             el.addEventListener("mousedown", this.touchEvents.onMouseDown, false);
             el.addEventListener("click", this.touchEvents.onClick, false);
@@ -44,6 +46,7 @@ define([
             if (!this.touchEvents.installed)
                 return;
             var el = this.$el.get(0);
+            el.removeEventListener("MSPointerDown", this.touchEvents.onPointerDown, false);
             el.removeEventListener("touchstart", this.touchEvents.onTouchStart, false);
             el.removeEventListener("mousedown", this.touchEvents.onMouseDown, false);
             el.removeEventListener("click", this.touchEvents.onClick, false);
@@ -90,6 +93,25 @@ define([
             if (TouchManager.instance.needsNativeTouch(event) || this.disabled())
                 return;
             this.onTouchStartInternal(event);
+            this.inlineUpdate();
+        },
+
+        onPointerDownInternal: function(event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+
+            var internalTouch = TouchManager.instance.findTouch(event.pointerId);
+            if (!internalTouch)
+                internalTouch = TouchManager.instance.handlePointerDown(event);
+            internalTouch.view = this;
+            this.setTouch(internalTouch);
+            this.trigger("touchstart", internalTouch);
+        },
+
+        onPointerDown: function(event) {
+            if (TouchManager.instance.needsNativeTouch(event) || this.disabled())
+                return;
+            this.onPointerDownInternal(event);
             this.inlineUpdate();
         },
 

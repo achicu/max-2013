@@ -19,16 +19,21 @@ define(["mobileui/views/touch",
 
     function TouchManager() {
         this.touchEvents = {
-           onTouchStart: this.onTouchStart.bind(this),
-           onTouchMove: this.onTouchMove.bind(this),
-           onTouchEnd: this.onTouchEnd.bind(this),
-           onTouchCancel: this.onTouchCancel.bind(this),
-           onMouseMove: this.onMouseMove.bind(this),
-           onMouseUp: this.onMouseUp.bind(this)
+            onPointerDown: this.onPointerDown.bind(this),
+            onPointerMove: this.onPointerMove.bind(this),
+            onPointerUp: this.onPointerUp.bind(this),
+            onPointerCancel: this.onPointerCancel.bind(this),
+            onTouchStart: this.onTouchStart.bind(this),
+            onTouchMove: this.onTouchMove.bind(this),
+            onTouchEnd: this.onTouchEnd.bind(this),
+            onTouchCancel: this.onTouchCancel.bind(this),
+            onMouseMove: this.onMouseMove.bind(this),
+            onMouseUp: this.onMouseUp.bind(this)
         };
         this.mouseEvent = null;
         this.touchPointsSet = {};
         this.touchPoints = [];
+        this.pointerEventsInstalled = false;
         this.touchEventsInstalled = false;
         this.mouseEventsInstalled = false;
         this.captureTouchSurface = null;
@@ -48,6 +53,7 @@ define(["mobileui/views/touch",
             this.touchPointsSet[touch.identifier] = touch;
             this.touchPoints.push(touch);
             this.installTouchTrackingEvents();
+            this.installPointerTrackingEvents();
         },
 
         cancelTouch: function(identifier) {
@@ -70,8 +76,30 @@ define(["mobileui/views/touch",
                 this.touchPoints.splice(index, 1);
             if (touch.identifier == Touch.MOUSE)
                 this.removeMouseTrackingEvents();
-            else if (!this.touchPoints.length)
+            else if (!this.touchPoints.length) {
                 this.removeTouchTrackingEvents();
+                this.removePointerTrackingEvents();
+            }
+        },
+
+        installPointerTrackingEvents: function() {
+            if (this.pointerEventsInstalled)
+                return;
+            this.pointerEventsInstalled = true;
+            window.addEventListener("MSPointerDown", this.touchEvents.onPointerDown, true);
+            window.addEventListener("MSPointerMove", this.touchEvents.onPointerMove, true);
+            window.addEventListener("MSPointerUp", this.touchEvents.onPointerUp, true);
+            window.addEventListener("MSPointerCancel", this.touchEvents.onPointerCancel, true);
+        },
+
+        removePointerTrackingEvents: function() {
+            if (!this.pointerEventsInstalled)
+                return;
+            this.pointerEventsInstalled = false;
+            window.removeEventListener("MSPointerDown", this.touchEvents.onPointerDown, true);
+            window.removeEventListener("MSPointerMove", this.touchEvents.onPointerMove, true);
+            window.removeEventListener("MSPointerUp", this.touchEvents.onPointerUp, true);
+            window.removeEventListener("MSPointerCancel", this.touchEvents.onPointerCancel, true);
         },
 
         installTouchTrackingEvents: function() {
@@ -120,6 +148,91 @@ define(["mobileui/views/touch",
         removeFocus: function() {
             if (document.activeElement)
                 $(document.activeElement).blur();
+        },
+
+        onPointerDown: function(event) {
+            if (!this.captureTouchSurface)
+                return;
+            this.removeFocus();
+            
+            if (this.findTouch(event.pointerId)) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                return;
+            }
+            var internalTouch = new Touch(event.pointerId);
+            internalTouch.view = null;
+            internalTouch.state = Touch.START;
+            internalTouch.startPosition = internalTouch.currentPosition = Touch.getPointerPosition(event);
+            internalTouch.updatePreviewBox();
+            this.setTouch(internalTouch);
+        
+            if (this.captureTouchSurface)
+                this.captureTouchSurface.onPointerDownInternal(event);
+
+            this.inlineUpdate();
+        },
+
+        handlePointerDown: function(touch) {
+            var internalTouch = this.findTouch(touch.pointerId);
+            if (internalTouch)
+                return internalTouch;
+            internalTouch = new Touch(touch.pointerId);
+            internalTouch.view = null;
+            internalTouch.state = Touch.START;
+            internalTouch.startPosition = internalTouch.currentPosition = Touch.getPointerPosition(touch);
+            internalTouch.updatePreviewBox();
+            this.setTouch(internalTouch);
+            return internalTouch;
+        },
+
+        onPointerMove: function(event) {
+            var internalTouch = this.findTouch(event.pointerId);
+            if (!internalTouch) {
+                return;
+            }
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            internalTouch.state = Touch.MOVE;
+            internalTouch.update(Touch.getPointerPosition(event));
+            if (internalTouch.view)
+                internalTouch.view.trigger("touchmove", internalTouch);
+            this.inlineUpdate();
+        },
+
+        onPointerUp: function(event) {
+            var internalTouch = this.findTouch(event.pointerId);
+            if (!internalTouch) {
+                console.log("Unregister touch identifier detected for pointerup event", event);
+                return;
+            }
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            internalTouch.state = Touch.END;
+            internalTouch.update(Touch.getPointerPosition(event));
+            this.removeTouch(internalTouch);
+            if (internalTouch.view) {
+                internalTouch.view.removeTouch(internalTouch);
+                internalTouch.view.trigger("touchend", internalTouch);
+            }
+            this.inlineUpdate();
+        },
+
+        onPointerCancel: function(event) {
+            var internalTouch = this.findTouch(event.pointerId);
+            if (!internalTouch) {
+                console.log("Unregister touch identifier detected for pointercancel event", event);
+                return;
+            }
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            internalTouch.state = Touch.CANCELED;
+            internalTouch.update(Touch.getPointerPosition(event));
+            this.removeTouch(internalTouch);
+            if (internalTouch.view) {
+                internalTouch.view.removeTouch(internalTouch);
+                internalTouch.view.trigger("touchcanceled", internalTouch);
+            }
         },
 
         onTouchStart: function(event) {

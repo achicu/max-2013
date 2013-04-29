@@ -111,6 +111,23 @@ define(["mobileui/utils/request-animation-frame",
         return touchPos;
     };
 
+    Touch.getPointerPosition = function(touch) {
+        var touchPos = {
+            clientX: touch.clientX,
+            clientY: touch.clientY,
+            pageX: touch.pageX,
+            pageY: touch.pageY,
+            screenX: touch.screenX,
+            screenY: touch.screenY,
+            localX: touch.offsetX,
+            localY: touch.offsetY,
+            parentX: touch.pageX,
+            parentY: touch.pageY,
+            time: Date.now()
+        };
+        return touchPos;
+    };
+
     Touch.injectLocalPoints = function(view, touch) {
         if (Touch.Point) {
             var point = new Touch.Point();

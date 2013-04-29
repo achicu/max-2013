@@ -18,6 +18,10 @@ body {
     overflow: hidden;
 }
 
+html {
+    -ms-touch-action: none; /* Direct all pointer events to JavaScript code. */
+}
+
 .js-layer-view {
     position: absolute;
 }
