@@ -29,8 +29,8 @@ define(["mobileui/ui/touch-item-view",
 
     var SplashLabels = [
         {
-            label: "Los Angeles",
-            className: "js-la-item-view"
+            label: "San Francisco",
+            className: "js-sf-item-view"
         }
     ];
 
@@ -44,7 +44,7 @@ define(["mobileui/ui/touch-item-view",
             this._filterView.append(this._layoutView.render());
 
             this._travelGuideView = new ContentView()
-                .setTextContent("Travel Guide")
+                .setTextContent("Photo Gallery")
                 .addClass("js-splash-item-view-guide-label");
             this._travelGuideView.ensureParams().matchParentWidth().fillParentHeight().matchLineHeight(true);
             this._travelGuideView.padding().setTop(30);
@@ -56,7 +56,7 @@ define(["mobileui/ui/touch-item-view",
             this._layoutView.append(this._labelView.render());
 
             this._exploreContentView = new ContentView()
-                .setTextContent("Explore Content")
+                .setTextContent("Slide up")
                 .addClass("js-splash-item-view-explore-label");
             this._exploreContentView.ensureParams().matchParentWidth().fillParentHeight().matchLineHeight(true);
             this._exploreContentView.padding().setBottom(30);
@@ -73,7 +73,7 @@ define(["mobileui/ui/touch-item-view",
 
         layout: function() {
             ItemView.__super__.layout.call(this);
-            this.$labelEl.css("font-size", Math.min(this._labelView.bounds().height() / 2,
+            this.$labelEl.css("font-size", Math.min(this._labelView.bounds().height() / 4,
                 this._labelView.bounds().width() / 8) + "px");
         },
 
