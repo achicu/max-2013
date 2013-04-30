@@ -25,26 +25,26 @@ define(["mobileui/ui/touch-item-view",
 
     var MoodLabels = [
         {
-            label: "Do",
+            label: "Gallery",
             className: "js-do-item-view",
             hue: 180,
             saturation: 23
         },
         {
-            label: "See",
+            label: "Events",
             className: "js-see-item-view",
             hue: 283,
             saturation: 15
         },
         {
-            label: "Buy",
+            label: "Nightlife",
             className: "js-buy-item-view",
             hue: 6,
             saturation: 53
 
         },
         {
-            label: "Eat",
+            label: "Art & Culture",
             className: "js-eat-item-view",
             hue: 53,
             saturation: 54

@@ -44,8 +44,6 @@ define(["mobileui/ui/touch-item-view",
             this._filterView.append(this._layoutView.render());
 
             this._travelGuideView = new ContentView()
-                .setTextContent("Photo Gallery")
-                .addClass("js-splash-item-view-guide-label");
             this._travelGuideView.ensureParams().matchParentWidth().fillParentHeight().matchLineHeight(true);
             this._travelGuideView.padding().setTop(30);
             this._layoutView.append(this._travelGuideView.render());
@@ -59,7 +57,7 @@ define(["mobileui/ui/touch-item-view",
                 .setTextContent("Slide up")
                 .addClass("js-splash-item-view-explore-label");
             this._exploreContentView.ensureParams().matchParentWidth().fillParentHeight().matchLineHeight(true);
-            this._exploreContentView.padding().setBottom(30);
+            this._exploreContentView.padding().setBottom(10);
             this._layoutView.append(this._exploreContentView.render());
 
             this.setEffect("warp");

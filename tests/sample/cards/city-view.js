@@ -25,16 +25,16 @@ define(["mobileui/ui/touch-item-view",
 
     var CityLabels = [
         {
-            label: "Mood",
-            className: "js-city-mood-item-view"
+            label: "Culture",
+            className: "js-city-culture-item-view"
         },
         {
-            label: "Location",
-            className: "js-city-location-item-view"
+            label: "Facts",
+            className: "js-city-facts-item-view"
         },
         {
-            label: "Search",
-            className: "js-city-search-item-view"
+            label: "People",
+            className: "js-city-people-item-view"
         }
     ];
 
