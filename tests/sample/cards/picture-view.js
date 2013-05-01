@@ -17,9 +17,10 @@
 define(["mobileui/ui/app-card-view",
         "mobileui/views/layer-view",
         "mobileui/utils/transform",
+        "mobileui/ui/window-view",
         "sample/views/url-card-view-mixin",
         "mobileui/utils/lock"],
-    function(AppCardView, LayerView, Transform, UrlCardViewMixin, lock) {
+    function(AppCardView, LayerView, Transform, WindowView, UrlCardViewMixin, lock) {
 
     var PictureView = AppCardView.extend(_.extend({
         initialize: function(options) {
@@ -48,10 +49,11 @@ define(["mobileui/ui/app-card-view",
         _computeViewTransform: function(view) {
             if (!view)
                 return new Transform().translate(0, 0).scale(1, 1);
-            var rect = view.getScreenRect();
-            return new Transform().translate(rect.left, rect.top)
-                .scale(rect.width / this.navigatorView().bounds().width(), 
-                    rect.height / this.navigatorView().bounds().height());
+            var rect = view.getScreenRect(),
+                parentWindow = WindowView.fromLayer(view),
+                windowRect = parentWindow.getScreenRect();
+            return new Transform().translate(rect.left - windowRect.left, rect.top - windowRect.top)
+                .scale(rect.width / windowRect.width, rect.height / windowRect.height);
         },
 
         _onActivate: function(options) {
