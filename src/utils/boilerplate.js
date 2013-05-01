@@ -75,11 +75,19 @@ define(function() {
 
     return {
         lookupPrefix: function(obj, name) {
-            return obj[name] || obj[browserPrefix + _.string.capitalize(name)];
+            try {
+                return obj[name] || obj[browserPrefix + _.string.capitalize(name)];
+            } catch (e) {
+                return null;
+            }
         },
 
         lookupUpperCasePrefix: function(obj, name) {
-            return obj[name] || obj[UpperCasePrefixMap[browserPrefix] + name];
+            try {
+                return obj[name] || obj[UpperCasePrefixMap[browserPrefix] + name];
+            } catch (e) {
+                return null;
+            }
         },
 
         prefixValue: function(value) {
