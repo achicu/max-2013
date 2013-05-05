@@ -136,7 +136,7 @@ define(["mobileui/views/content-view",
             this._pictureView.ensureParams().matchChildrenWidth().matchParentHeight();
             this._pictureScrollView.setContentView(this._pictureView.render());
 
-            var colors = ["DeepSkyBlue", "PaleVioletRed", "MediumSlateBlue", "DarkSeaGreen", "BurlyWood"];
+            var colors = ["asset_picture1", "asset_picture2", "asset_picture3", "asset_picture4", "asset_picture5"];
             for (var i = 0; i < colors.length; ++i) {
                 var picture = new LayerView();
                 picture.addGestureDetector()
@@ -144,11 +144,7 @@ define(["mobileui/views/content-view",
                 picture.color = colors[i];
                 picture.index = i + 1;
                 picture.ensureParams().matchWidthOf(this._pictureScrollView).matchParentHeight();
-                picture.$el.css("background-color", colors[i])
-                    .append($("<div />")
-                        .css("font-size", "2.5em")
-                        .addClass("center")
-                        .text(i + 1));
+                picture.$el.addClass(colors[i]);
                 this._pictureView.append(picture.render());
             }
 

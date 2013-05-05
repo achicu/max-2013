@@ -38,11 +38,7 @@ define(["mobileui/ui/app-card-view",
                 var data = decodeURIComponent(options.path).split(":");
                 this.color = data[0];
                 this.index = data[1];
-                this._pictureView.$el.css("background-color", this.color)
-                    .append($("<div />")
-                        .css("font-size", "2.5em")
-                        .addClass("center")
-                        .text(this.index));
+                this._pictureView.$el.addClass(this.color);
             }
         },
 
