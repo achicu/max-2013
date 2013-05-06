@@ -48,8 +48,8 @@ define(["mobileui/ui/app-card-view",
             var rect = view.getScreenRect(),
                 parentWindow = WindowView.fromLayer(view),
                 windowRect = parentWindow.getScreenRect();
-            return new Transform().translate(rect.left - windowRect.left, rect.top - windowRect.top)
-                .scale(rect.width / windowRect.width, rect.height / windowRect.height);
+            return new Transform().translate(/*rect.left - windowRect.left*/ 0, rect.top - windowRect.top)
+                .scale(/*rect.width / windowRect.width*/ 1, rect.height / windowRect.height);
         },
 
         _onActivate: function(options) {
