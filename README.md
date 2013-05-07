@@ -1,7 +1,11 @@
-max-shaders-demo
+Adobe MAX 2013 - Presentation
 ================
+
+Link
+-----
+http://achicu.github.io/max-2013/tests/presenter/index.min.html
 
 Usage
 -----
 
-Open `tests/sample/index.html` in your browser.
+Open `tests/presenter/index.html` in your browser.
