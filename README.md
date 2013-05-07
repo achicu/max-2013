@@ -1,7 +1,7 @@
-max-shaders-demo
+Adobe MAX 2013 - Presentation
 ================
 
 Usage
 -----
 
-Open `tests/sample/index.html` in your browser.
+Open `tests/presenter/index.html` in your browser.
