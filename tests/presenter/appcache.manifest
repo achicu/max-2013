@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Version 0.2
+# Version 0.5
 
 dist/all.min.js
 ../../style/font/SourceSansPro/SourceSansPro-Regular.otf
@@ -20,3 +20,8 @@ images/offline.svg
 images/phone_ui.svg
 images/adobe.png
 ../sample/assets/main_bg.jpg
+../sample/assets/IMG_0546.jpg
+../sample/assets/IMG_0522.jpg
+../sample/assets/IMG_0438.jpg
+../sample/assets/IMG_0430.jpg
+../sample/assets/IMG_0373.jpg

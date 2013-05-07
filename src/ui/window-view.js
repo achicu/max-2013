@@ -55,7 +55,6 @@ define(["mobileui/views/layout-view"], function(LayoutView) {
     }, {
         fromLayer: function(layer) {
             var windowLayer = layer;
-            console.log(layer);
             for (; windowLayer; windowLayer = windowLayer.parent()) {
                 if (windowLayer instanceof WindowView)
                     return windowLayer;

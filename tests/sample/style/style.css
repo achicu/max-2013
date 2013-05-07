@@ -30,6 +30,31 @@
     color: black;
 }
 
+.asset_picture1 {
+    background: url(../assets/IMG_0546.jpg) no-repeat center;
+    background-size: cover;
+}
+
+.asset_picture2 {
+    background: url(../assets/IMG_0522.jpg) no-repeat center;
+    background-size: cover;
+}
+
+.asset_picture3 {
+    background: url(../assets/IMG_0438.jpg) no-repeat center;
+    background-size: cover;
+}
+
+.asset_picture4 {
+    background: url(../assets/IMG_0430.jpg) no-repeat center;
+    background-size: cover;
+}
+
+.asset_picture5 {
+    background: url(../assets/IMG_0373.jpg) no-repeat center;
+    background-size: cover;
+}
+
 .js-splash-item-view-guide-label {
     font-family: "source-l";
     font-style: italic;

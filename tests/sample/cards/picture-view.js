@@ -17,9 +17,10 @@
 define(["mobileui/ui/app-card-view",
         "mobileui/views/layer-view",
         "mobileui/utils/transform",
+        "mobileui/ui/window-view",
         "sample/views/url-card-view-mixin",
         "mobileui/utils/lock"],
-    function(AppCardView, LayerView, Transform, UrlCardViewMixin, lock) {
+    function(AppCardView, LayerView, Transform, WindowView, UrlCardViewMixin, lock) {
 
     var PictureView = AppCardView.extend(_.extend({
         initialize: function(options) {
@@ -37,21 +38,18 @@ define(["mobileui/ui/app-card-view",
                 var data = decodeURIComponent(options.path).split(":");
                 this.color = data[0];
                 this.index = data[1];
-                this._pictureView.$el.css("background-color", this.color)
-                    .append($("<div />")
-                        .css("font-size", "2.5em")
-                        .addClass("center")
-                        .text(this.index));
+                this._pictureView.$el.addClass(this.color);
             }
         },
 
         _computeViewTransform: function(view) {
             if (!view)
                 return new Transform().translate(0, 0).scale(1, 1);
-            var rect = view.getScreenRect();
-            return new Transform().translate(rect.left, rect.top)
-                .scale(rect.width / this.navigatorView().bounds().width(), 
-                    rect.height / this.navigatorView().bounds().height());
+            var rect = view.getScreenRect(),
+                parentWindow = WindowView.fromLayer(view),
+                windowRect = parentWindow.getScreenRect();
+            return new Transform().translate(/*rect.left - windowRect.left*/ 0, rect.top - windowRect.top)
+                .scale(/*rect.width / windowRect.width*/ 1, rect.height / windowRect.height);
         },
 
         _onActivate: function(options) {
